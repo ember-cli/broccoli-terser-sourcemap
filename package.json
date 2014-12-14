@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha"
   },
-  "author": "",
+  "repository": "https://github.com/ef4/broccoli-uglify-sourcemap",
+  "author": "Edward Faulkner <ef@alum.mit.edu>",
   "license": "MIT",
   "dependencies": {
     "broccoli-writer": "^0.1.1",
