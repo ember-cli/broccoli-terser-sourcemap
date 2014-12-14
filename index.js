@@ -21,6 +21,7 @@ function UglifyWriter (inputTree, options) {
   this.options = merge({
     mangle: true,
     compress: true,
+    enableSourcemaps: true,
     sourceMapIncludeSources: true
   }, options);
   this.inputTree = inputTree;
@@ -55,37 +56,39 @@ UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath) {
 
   var opts = {
     fromString: true,
-    outSourceMap: path.basename(mapName),
+    outSourceMap: this.options.enableSourcemaps ? path.basename(mapName) : null,
     file: path.basename(inFile)
   };
 
-  if (srcURL.existsIn(src)) {
+  if (this.options.enableSourcemaps && srcURL.existsIn(src)) {
     var url = srcURL.getFrom(src);
     opts.inSourceMap = path.join(path.dirname(inFile), url);
     origSourcesContent = JSON.parse(fs.readFileSync(opts.inSourceMap)).sourcesContent;
   }
 
   var result = UglifyJS.minify(src, merge(opts, this.options));
-  var newSourceMap = JSON.parse(result.map);
 
-  if (origSourcesContent) {
-    // This is a workaround for https://github.com/mishoo/UglifyJS2/pull/566
-    newSourceMap.sourcesContent = origSourcesContent;
-  } else {
-    newSourceMap.sources = [ relativePath ];
-    newSourceMap.sourcesContent = [ src ];
-  }
+  if (this.options.enableSourcemaps) {
+    var newSourceMap = JSON.parse(result.map);
 
-  newSourceMap.sources = newSourceMap.sources.map(function(path){
-    // If out output file has the same name as one of our original
-    // sources, they will shadow eachother in Dev Tools. So instead we
-    // alter the reference to the upstream file.
-    if (path === relativePath) {
-      path = path.replace(/\.js$/, '-orig.js');
+    if (origSourcesContent) {
+      // This is a workaround for https://github.com/mishoo/UglifyJS2/pull/566
+      newSourceMap.sourcesContent = origSourcesContent;
+    } else {
+      newSourceMap.sources = [ relativePath ];
+      newSourceMap.sourcesContent = [ src ];
     }
-    return path;
-  });
 
+    newSourceMap.sources = newSourceMap.sources.map(function(path){
+      // If out output file has the same name as one of our original
+      // sources, they will shadow eachother in Dev Tools. So instead we
+      // alter the reference to the upstream file.
+      if (path === relativePath) {
+        path = path.replace(/\.js$/, '-orig.js');
+      }
+      return path;
+    });
+    fs.writeFileSync(mapName, JSON.stringify(newSourceMap));
+  }
   fs.writeFileSync(outFile, result.code);
-  fs.writeFileSync(mapName, JSON.stringify(newSourceMap));
 };
