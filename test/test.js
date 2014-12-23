@@ -24,7 +24,7 @@ describe('broccoli-uglify-sourcemap', function() {
   });
 
   it('can disable sourcemaps', function() {
-    var tree = new uglify(fixtures, {enableSourcemaps: false});
+    var tree = new uglify(fixtures, {sourceMapConfig: { enable: false } });
     builder = new broccoli.Builder(tree);
     return builder.build().then(function(result) {
       expectFile('with-upstream-sourcemap.js').withoutSourcemapURL().in(result);
@@ -35,6 +35,17 @@ describe('broccoli-uglify-sourcemap', function() {
     });
   });
 
+  it('supports alternate sourcemap location', function() {
+    var tree = new uglify(fixtures, { sourceMapConfig: { mapDir: 'maps'}});
+    builder = new broccoli.Builder(tree);
+    return builder.build().then(function(result) {
+      expectFile('with-upstream-sourcemap.js').withSourcemapURL('/maps/with-upstream-sourcemap.map').in(result);
+      expectFile('with-upstream-sourcemap.map').in(result, 'maps');
+      expectFile('no-upstream-sourcemap.js').withSourcemapURL('/maps/no-upstream-sourcemap.map').in(result);
+      expectFile('no-upstream-sourcemap.map').in(result, 'maps');
+      expectFile('something.css').in(result);
+    });
+  });
 
   afterEach(function() {
     if (builder) {
@@ -47,9 +58,13 @@ describe('broccoli-uglify-sourcemap', function() {
 
 function expectFile(filename) {
   var stripURL = false;
+  var expectURL;
 
-  function inner(result) {
-    var actualContent = fs.readFileSync(path.join(result.directory, filename), 'utf-8');
+  function inner(result, subdir) {
+    if (!subdir) {
+      subdir = '.';
+    }
+    var actualContent = fs.readFileSync(path.join(result.directory, subdir, filename), 'utf-8');
     mkdirp.sync(path.dirname(path.join(__dirname, 'actual', filename)));
     fs.writeFileSync(path.join(__dirname, 'actual', filename), actualContent);
 
@@ -58,6 +73,11 @@ function expectFile(filename) {
       expectedContent = fs.readFileSync(path.join(__dirname, 'expected', filename), 'utf-8');
       if (stripURL) {
         expectedContent = expectedContent.replace(/\s*\/\/# sourceMappingURL=.*$/, '');
+      }
+      if (expectURL) {
+        expectedContent = expectedContent.replace(/(\s*\/\/# sourceMappingURL=).*$/, function(all, capture){
+          return capture + expectURL;
+        });
       }
 
     } catch (err) {
@@ -75,5 +95,9 @@ function expectFile(filename) {
     stripURL = true;
     return this;
   }
-  return { in: inner, notIn: notIn, withoutSourcemapURL: withoutSourcemapURL };
+  function withSourcemapURL(url) {
+    expectURL = url;
+    return this;
+  }
+  return { in: inner, notIn: notIn, withoutSourcemapURL: withoutSourcemapURL, withSourcemapURL: withSourcemapURL };
 }

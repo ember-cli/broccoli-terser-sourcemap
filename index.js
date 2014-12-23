@@ -21,9 +21,14 @@ function UglifyWriter (inputTree, options) {
   this.options = merge({
     mangle: true,
     compress: true,
-    enableSourcemaps: true,
     sourceMapIncludeSources: true
   }, options);
+
+  this.sourceMapConfig = merge({
+    enable: true,
+    extensions: ['js']
+  }, this.options.sourceMapConfig);
+
   this.inputTree = inputTree;
 }
 
@@ -38,7 +43,7 @@ UglifyWriter.prototype.write = function (readTree, outDir) {
       var outFile = path.join(outDir, relativePath);
       mkdirp.sync(path.dirname(outFile));
       if (relativePath.slice(-3) === '.js') {
-        self.processFile(inFile, outFile, relativePath);
+        self.processFile(inFile, outFile, relativePath, outDir);
       } else if (relativePath.slice(-4) === '.map') {
         // skip, because it will get handled when its corresponding JS does
       } else {
@@ -49,18 +54,35 @@ UglifyWriter.prototype.write = function (readTree, outDir) {
   });
 };
 
-UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath) {
+UglifyWriter.prototype.enableSourcemaps = function() {
+  return this.sourceMapConfig.enable &&
+    this.sourceMapConfig.extensions.indexOf('js') > -1;
+};
+
+
+UglifyWriter.prototype.mapURL = function(mapName) {
+  if (this.enableSourcemaps()) {
+    if (this.sourceMapConfig.mapDir) {
+      return '/' + path.join(this.sourceMapConfig.mapDir, mapName);
+    } else {
+      return mapName;
+    }
+  }
+};
+
+UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath, outDir) {
   var src = fs.readFileSync(inFile, 'utf-8');
-  var mapName = outFile.replace(/\.js$/,'') + '.map';
+  var mapName = path.basename(outFile).replace(/\.js$/,'') + '.map';
   var origSourcesContent;
+
 
   var opts = {
     fromString: true,
-    outSourceMap: this.options.enableSourcemaps ? path.basename(mapName) : null,
-    file: path.basename(inFile)
+    outSourceMap: this.mapURL(mapName),
+    enableSourcemaps: this.enableSourcemaps()
   };
 
-  if (this.options.enableSourcemaps && srcURL.existsIn(src)) {
+  if (opts.enableSourcemaps && srcURL.existsIn(src)) {
     var url = srcURL.getFrom(src);
     opts.inSourceMap = path.join(path.dirname(inFile), url);
     origSourcesContent = JSON.parse(fs.readFileSync(opts.inSourceMap)).sourcesContent;
@@ -68,7 +90,7 @@ UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath) {
 
   var result = UglifyJS.minify(src, merge(opts, this.options));
 
-  if (this.options.enableSourcemaps) {
+  if (opts.enableSourcemaps) {
     var newSourceMap = JSON.parse(result.map);
 
     if (origSourcesContent) {
@@ -79,6 +101,10 @@ UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath) {
       newSourceMap.sourcesContent = [ src ];
     }
 
+    // uglify is wrong about this and always puts the maps own name
+    // here.
+    newSourceMap.file = path.basename(inFile);
+
     newSourceMap.sources = newSourceMap.sources.map(function(path){
       // If out output file has the same name as one of our original
       // sources, they will shadow eachother in Dev Tools. So instead we
@@ -88,7 +114,8 @@ UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath) {
       }
       return path;
     });
-    fs.writeFileSync(mapName, JSON.stringify(newSourceMap));
+    mkdirp.sync(path.dirname(path.join(outDir, this.sourceMapConfig.mapDir || '.', mapName)));
+    fs.writeFileSync(path.join(outDir, this.sourceMapConfig.mapDir || '.', mapName), JSON.stringify(newSourceMap));
   }
   fs.writeFileSync(outFile, result.code);
 };
