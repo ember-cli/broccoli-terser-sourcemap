@@ -73,7 +73,14 @@ UglifyWriter.prototype.mapURL = function(mapName) {
 UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath, outDir) {
   var src = fs.readFileSync(inFile, 'utf-8');
   var mapName = path.basename(outFile).replace(/\.js$/,'') + '.map';
+  var mapDir;
   var origSourcesContent;
+
+  if (this.sourceMapConfig.mapDir) {
+    mapDir = path.join(outDir, this.sourceMapConfig.mapDir);
+  } else {
+    mapDir = path.dirname(path.join(outDir, relativePath));
+  }
 
 
   var opts = {
@@ -114,8 +121,8 @@ UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath, out
       }
       return path;
     });
-    mkdirp.sync(path.dirname(path.join(outDir, this.sourceMapConfig.mapDir || '.', mapName)));
-    fs.writeFileSync(path.join(outDir, this.sourceMapConfig.mapDir || '.', mapName), JSON.stringify(newSourceMap));
+    mkdirp.sync(mapDir);
+    fs.writeFileSync(path.join(mapDir, mapName), JSON.stringify(newSourceMap));
   }
   fs.writeFileSync(outFile, result.code);
 };
