@@ -15,8 +15,8 @@ describe('broccoli-uglify-sourcemap', function() {
     var tree = new uglify(fixtures);
     builder = new broccoli.Builder(tree);
     return builder.build().then(function(result) {
-      expectFile('with-upstream-sourcemap.js').in(result);
-      expectFile('with-upstream-sourcemap.map').in(result);
+      expectFile('with-upstream-sourcemap.js').in(result, 'inside');
+      expectFile('with-upstream-sourcemap.map').in(result, 'inside');
       expectFile('no-upstream-sourcemap.js').in(result);
       expectFile('no-upstream-sourcemap.map').in(result);
       expectFile('something.css').in(result);
@@ -27,7 +27,7 @@ describe('broccoli-uglify-sourcemap', function() {
     var tree = new uglify(fixtures, {sourceMapConfig: { enable: false } });
     builder = new broccoli.Builder(tree);
     return builder.build().then(function(result) {
-      expectFile('with-upstream-sourcemap.js').withoutSourcemapURL().in(result);
+      expectFile('with-upstream-sourcemap.js').withoutSourcemapURL().in(result, 'inside');
       expectFile('with-upstream-sourcemap.map').notIn(result);
       expectFile('no-upstream-sourcemap.js').withoutSourcemapURL().in(result);
       expectFile('no-upstream-sourcemap.map').notIn(result);
@@ -39,7 +39,7 @@ describe('broccoli-uglify-sourcemap', function() {
     var tree = new uglify(fixtures, { sourceMapConfig: { mapDir: 'maps'}});
     builder = new broccoli.Builder(tree);
     return builder.build().then(function(result) {
-      expectFile('with-upstream-sourcemap.js').withSourcemapURL('/maps/with-upstream-sourcemap.map').in(result);
+      expectFile('with-upstream-sourcemap.js').withSourcemapURL('/maps/with-upstream-sourcemap.map').in(result, 'inside');
       expectFile('with-upstream-sourcemap.map').in(result, 'maps');
       expectFile('no-upstream-sourcemap.js').withSourcemapURL('/maps/no-upstream-sourcemap.map').in(result);
       expectFile('no-upstream-sourcemap.map').in(result, 'maps');
