@@ -25,7 +25,7 @@ function UglifyWriter (inputTree, options) {
   }, options);
 
   this.sourceMapConfig = merge({
-    enable: true,
+    enabled: true,
     extensions: ['js']
   }, this.options.sourceMapConfig);
 
@@ -55,7 +55,7 @@ UglifyWriter.prototype.write = function (readTree, outDir) {
 };
 
 UglifyWriter.prototype.enableSourcemaps = function() {
-  return this.sourceMapConfig.enable &&
+  return this.sourceMapConfig.enabled &&
     this.sourceMapConfig.extensions.indexOf('js') > -1;
 };
 
