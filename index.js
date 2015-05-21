@@ -95,7 +95,12 @@ UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath, out
     origSourcesContent = JSON.parse(fs.readFileSync(opts.inSourceMap)).sourcesContent;
   }
 
-  var result = UglifyJS.minify(src, merge(opts, this.options));
+  try {
+    var result = UglifyJS.minify(src, merge(opts, this.options));
+  } catch(e) {
+    e.filename = e.filename || relativePath;
+    throw e;
+  }
 
   if (opts.enableSourcemaps) {
     var newSourceMap = JSON.parse(result.map);
