@@ -98,7 +98,7 @@ UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath, out
   try {
     var result = UglifyJS.minify(src, merge(opts, this.options));
   } catch(e) {
-    e.filename = (!e.filename || e.filename === '?') ? relativePath : e.filename;
+    e.filename = relativePath;
     throw e;
   }
 
