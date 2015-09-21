@@ -35,6 +35,22 @@ describe('broccoli-uglify-sourcemap', function() {
     });
   });
 
+  it('can exclude files form getting uglified', function() {
+    var tree = new uglify(fixtures, {
+      exclude: ['inside/with-up*']
+    });
+
+    builder = new broccoli.Builder(tree);
+    return builder.build().then(function(result) {
+      expectFile('with-upstream-sourcemap.js').unminified().in(result, 'inside');
+      expectFile('with-upstream-sourcemap.map').unminified().in(result, 'inside');
+      expectFile('no-upstream-sourcemap.js').in(result);
+      expectFile('no-upstream-sourcemap.map').in(result);
+      expectFile('something.css').in(result);
+    });
+  });
+
+
   it('supports alternate sourcemap location', function() {
     var tree = new uglify(fixtures, { sourceMapConfig: { mapDir: 'maps'}});
     builder = new broccoli.Builder(tree);
@@ -58,6 +74,7 @@ describe('broccoli-uglify-sourcemap', function() {
 
 function expectFile(filename) {
   var stripURL = false;
+  var minified = true;
   var expectURL;
 
   function inner(result, subdir) {
@@ -70,12 +87,13 @@ function expectFile(filename) {
 
     var expectedContent;
     try {
-      expectedContent = fs.readFileSync(path.join(__dirname, 'expected', filename), 'utf-8');
+      var expectedPath = minified ? 'expected' : 'expected/unminified';
+      expectedContent = fs.readFileSync(path.join(__dirname, expectedPath, filename), 'utf-8');
       if (stripURL) {
         expectedContent = expectedContent.replace(/\s*\/\/# sourceMappingURL=.*$/, '');
       }
       if (expectURL) {
-        expectedContent = expectedContent.replace(/(\s*\/\/# sourceMappingURL=).*$/, function(all, capture){
+        expectedContent = expectedContent.replace(/(\s*\/\/# sourceMappingURL=).*$/, function(all, capture) {
           return capture + expectURL;
         });
       }
@@ -87,17 +105,32 @@ function expectFile(filename) {
     expect(actualContent).to.equal(expectedContent, "discrepancy in " + filename);
     return this;
   }
+
   function notIn(result) {
     expect(fs.existsSync(path.join(result.directory, filename))).to.equal(false);
     return this;
   }
+
   function withoutSourcemapURL() {
     stripURL = true;
     return this;
   }
+
   function withSourcemapURL(url) {
     expectURL = url;
     return this;
   }
-  return { in: inner, notIn: notIn, withoutSourcemapURL: withoutSourcemapURL, withSourcemapURL: withSourcemapURL };
+
+  function unminified() {
+    minified = false;
+    return this;
+  }
+
+  return {
+    unminified: unminified,
+    in: inner,
+    notIn: notIn,
+    withoutSourcemapURL: withoutSourcemapURL,
+    withSourcemapURL: withSourcemapURL
+  };
 }
