@@ -2,3 +2,28 @@
 
 A broccoli filter that applies uglify-js while properly generating or
 maintaining sourcemaps.
+
+### installation
+
+```sh
+npm install --save broccoli-uglify-writer
+```
+
+### usage
+
+```js
+var uglify = require('broccoli-uglify-writer');
+
+var uglified = uglify(input); // basic usage
+
+var uglified = uglify(input, {
+  mangle: true,   // defaults to true
+  compress: true, // defaults to true
+  sourceMapIncludeSources: true // defaults to true
+  //...
+  sourceMapConfig: {
+    enabled: true, // defaults to true
+    extensions: [ 'js' ] // defaulst to [ 'js' ]
+  }
+});
+```
