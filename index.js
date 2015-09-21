@@ -7,6 +7,7 @@ var merge = require('lodash-node/modern/objects/merge');
 var symlinkOrCopy = require('symlink-or-copy');
 var mkdirp = require('mkdirp');
 var srcURL = require('source-map-url');
+var minimatch = require('minimatch');
 
 module.exports = UglifyWriter;
 
@@ -96,6 +97,23 @@ UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath, out
   }
 
   try {
+    // if we have exclude options
+    if (this.sourceMapConfig.minifyJS && this.sourceMapConfig.minifyJS.exclude && this.sourceMapConfig.minifyJS.exclude.length) {
+      
+      // check if the file being processed is excluded in this.sourceMapConfig
+      for (var excludeIndex = 0; excludeIndex < this.sourceMapConfig.minifyJS.exclude.length; excludeIndex++) {
+        
+        // if we match something in exclude, write src to outFile, short circuit and return
+        if ( minimatch(relativePath, this.sourceMapConfig.minifyJS.exclude[excludeIndex]) ) {
+          
+          // write the outFile immediately and return
+          fs.writeFileSync(outFile, src);
+          return;
+        }
+      }
+      // relativePath is not excluded, proceed
+    }
+    
     var result = UglifyJS.minify(src, merge(opts, this.options));
   } catch(e) {
     e.filename = relativePath;
