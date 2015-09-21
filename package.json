@@ -4,7 +4,8 @@
   "description": "Broccoli filter to uglify files while preserving their sourcemaps.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --inline-diffs"
+    "test": "mocha --inline-diffs",
+    "test:debug": "mocha debug --inline-diffs"
   },
   "repository": "https://github.com/ef4/broccoli-uglify-sourcemap",
   "author": "Edward Faulkner <ef@alum.mit.edu>",
