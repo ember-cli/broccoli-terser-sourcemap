@@ -8,6 +8,7 @@ var symlinkOrCopy = require('symlink-or-copy');
 var mkdirp = require('mkdirp');
 var srcURL = require('source-map-url');
 var MatcherCollection = require('matcher-collection');
+var debug = require('debug')('broccoli-uglify-sourcemap');
 
 module.exports = UglifyWriter;
 
@@ -115,7 +116,18 @@ UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath, out
   }
 
   try {
+    var start = new Date();
+    debug('[starting]: %s %dKB', relativePath, (src.length / 1000));
     var result = UglifyJS.minify(src, merge(opts, this.options));
+    var end = new Date();
+    var total = end - start;
+    debug('[finsihed]: %s %dKB in %dms', relativePath, (result.code.length / 1000), total);
+
+    if (total > 20000) {
+      console.warn('[WARN] `' + relativePath + '` took: ' + total + 'ms (more then 20,000ms)');
+    }
+
+
   } catch(e) {
     e.filename = relativePath;
     throw e;
