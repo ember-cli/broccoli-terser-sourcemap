@@ -22,6 +22,7 @@ var uglified = uglify(input, {
   mangle: true,   // defaults to true
   compress: true, // defaults to true
   sourceMapIncludeSources: true // defaults to true
+  exclusion: [..] // array of globs, to not minify
   //...
   sourceMapConfig: {
     enabled: true, // defaults to true

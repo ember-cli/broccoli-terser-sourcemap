@@ -7,6 +7,7 @@ var merge = require('lodash-node/modern/objects/merge');
 var symlinkOrCopy = require('symlink-or-copy');
 var mkdirp = require('mkdirp');
 var srcURL = require('source-map-url');
+var MatcherCollection = require('matcher-collection');
 
 module.exports = UglifyWriter;
 
@@ -30,10 +31,23 @@ function UglifyWriter (inputTree, options) {
   }, this.options.sourceMapConfig);
 
   this.inputTree = inputTree;
+
+  var exclude = this.options.exclude;
+  if (Array.isArray(exclude)) {
+    this.excludes = new MatcherCollection(exclude);
+  } else {
+    this.excludes = MatchNothing;
+  }
 }
 
+var MatchNothing = {
+  match: function () {
+    return false;
+  }
+};
+
 UglifyWriter.prototype.write = function (readTree, outDir) {
-  var self = this;
+  var writer = this;
   return readTree(this.inputTree).then(function(inDir){
     walkSync(inDir).forEach(function(relativePath) {
       if (relativePath.slice(-1) === '/') {
@@ -41,10 +55,16 @@ UglifyWriter.prototype.write = function (readTree, outDir) {
       }
       var inFile = path.join(inDir, relativePath);
       var outFile = path.join(outDir, relativePath);
+
       mkdirp.sync(path.dirname(outFile));
-      if (relativePath.slice(-3) === '.js') {
-        self.processFile(inFile, outFile, relativePath, outDir);
+
+      if (relativePath.slice(-3) === '.js' && !writer.excludes.match(relativePath)) {
+        writer.processFile(inFile, outFile, relativePath, outDir);
       } else if (relativePath.slice(-4) === '.map') {
+        if (writer.excludes.match(relativePath.slice(relativePath.lenth - 4) + '.js')) {
+          // ensure .map files for excldue JS paths are also copied forward
+          symlinkOrCopy.sync(inFile, outFile);
+        }
         // skip, because it will get handled when its corresponding JS does
       } else {
         symlinkOrCopy.sync(inFile, outFile);
@@ -81,7 +101,6 @@ UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath, out
   } else {
     mapDir = path.dirname(path.join(outDir, relativePath));
   }
-
 
   var opts = {
     fromString: true,
