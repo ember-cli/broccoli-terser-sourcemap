@@ -26,7 +26,7 @@ var uglified = uglify(input, {
   //...
   sourceMapConfig: {
     enabled: true, // defaults to true
-    extensions: [ 'js' ] // defaulst to [ 'js' ]
+    extensions: [ 'js' ] // defaults to [ 'js' ]
   }
 });
 ```
