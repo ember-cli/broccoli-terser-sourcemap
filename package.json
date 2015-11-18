@@ -1,6 +1,6 @@
 {
   "name": "broccoli-uglify-sourcemap",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Broccoli filter to uglify files while preserving their sourcemaps.",
   "main": "index.js",
   "scripts": {
