@@ -6,13 +6,13 @@ maintaining sourcemaps.
 ### installation
 
 ```sh
-npm install --save broccoli-uglify-writer
+npm install --save broccoli-uglify-sourcemap
 ```
 
 ### usage
 
 ```js
-var uglify = require('broccoli-uglify-writer');
+var uglify = require('broccoli-uglify-sourcemap');
 
 // basic usage
 var uglified = uglify(input);
