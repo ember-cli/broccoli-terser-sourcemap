@@ -11,7 +11,7 @@
   "author": "Edward Faulkner <ef@alum.mit.edu>",
   "license": "MIT",
   "dependencies": {
-    "broccoli-writer": "^0.1.1",
+    "broccoli-plugin": "^1.2.1",
     "lodash": "^3.10.1",
     "matcher-collection": "^1.0.0",
     "mkdirp": "^0.5.0",

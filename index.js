@@ -1,5 +1,5 @@
 var walkSync = require('walk-sync');
-var Writer = require('broccoli-writer');
+var Plugin = require('broccoli-plugin');
 var UglifyJS = require('uglify-js');
 var path = require('path');
 var fs = require('fs');
@@ -11,14 +11,17 @@ var MatcherCollection = require('matcher-collection');
 
 module.exports = UglifyWriter;
 
-UglifyWriter.prototype = Object.create(Writer.prototype);
+UglifyWriter.prototype = Object.create(Plugin.prototype);
 UglifyWriter.prototype.constructor = UglifyWriter;
 
-function UglifyWriter (inputTree, options) {
+function UglifyWriter (inputNodes, options) {
   if (!(this instanceof UglifyWriter)) {
-    return new UglifyWriter(inputTree, options);
+    return new UglifyWriter(inputNodes, options);
   }
-  Writer.call(this, inputTree, options);
+  
+  inputNodes = Array.isArray(inputNodes) ? inputNodes : [inputNodes];
+
+  Plugin.call(this, inputNodes, options);
   this.options = merge({
     mangle: true,
     compress: true,
@@ -30,7 +33,7 @@ function UglifyWriter (inputTree, options) {
     extensions: ['js']
   }, this.options.sourceMapConfig);
 
-  this.inputTree = inputTree;
+  this.inputNodes = inputNodes;
 
   var exclude = this.options.exclude;
   if (Array.isArray(exclude)) {
@@ -46,20 +49,21 @@ var MatchNothing = {
   }
 };
 
-UglifyWriter.prototype.write = function (readTree, outDir) {
+UglifyWriter.prototype.build = function () {
   var writer = this;
-  return readTree(this.inputTree).then(function(inDir){
-    walkSync(inDir).forEach(function(relativePath) {
+
+  this.inputPaths.forEach(function(inputPath) {
+    walkSync(inputPath).forEach(function(relativePath) {
       if (relativePath.slice(-1) === '/') {
         return;
       }
-      var inFile = path.join(inDir, relativePath);
-      var outFile = path.join(outDir, relativePath);
+      var inFile = path.join(inputPath, relativePath);
+      var outFile = path.join(writer.outputPath, relativePath);
 
       mkdirp.sync(path.dirname(outFile));
 
       if (relativePath.slice(-3) === '.js' && !writer.excludes.match(relativePath)) {
-        writer.processFile(inFile, outFile, relativePath, outDir);
+        writer.processFile(inFile, outFile, relativePath, writer.outputPath);
       } else if (relativePath.slice(-4) === '.map') {
         if (writer.excludes.match(relativePath.slice(relativePath.lenth - 4) + '.js')) {
           // ensure .map files for excldue JS paths are also copied forward
@@ -70,15 +74,15 @@ UglifyWriter.prototype.write = function (readTree, outDir) {
         symlinkOrCopy.sync(inFile, outFile);
       }
     });
-    return outDir;
   });
+
+  return this.outputPath;
 };
 
 UglifyWriter.prototype.enableSourcemaps = function() {
   return this.sourceMapConfig.enabled &&
     this.sourceMapConfig.extensions.indexOf('js') > -1;
 };
-
 
 UglifyWriter.prototype.mapURL = function(mapName) {
   if (this.enableSourcemaps()) {
