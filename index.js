@@ -58,7 +58,7 @@ UglifyWriter.prototype.write = function (readTree, outDir) {
 
       mkdirp.sync(path.dirname(outFile));
 
-      if (relativePath.slice(-3) === '.js' && !writer.excludes.match(relativePath)) {
+      if (relativePath.slice(-3) === '.js' && !writer.excludes.match(relativePath) && !/\.min\./.test(relativePath)) {
         writer.processFile(inFile, outFile, relativePath, outDir);
       } else if (relativePath.slice(-4) === '.map') {
         if (writer.excludes.match(relativePath.slice(relativePath.lenth - 4) + '.js')) {
