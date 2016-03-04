@@ -20,6 +20,7 @@ describe('broccoli-uglify-sourcemap', function() {
       expectFile('no-upstream-sourcemap.js').in(result);
       expectFile('no-upstream-sourcemap.map').in(result);
       expectFile('something.css').in(result);
+      expectFile('already.min.js').unminified().in(result);
     });
   });
 
@@ -32,6 +33,7 @@ describe('broccoli-uglify-sourcemap', function() {
       expectFile('no-upstream-sourcemap.js').withoutSourcemapURL().in(result);
       expectFile('no-upstream-sourcemap.map').notIn(result);
       expectFile('something.css').in(result);
+      expectFile('already.min.js').unminified().in(result);
     });
   });
 
@@ -47,6 +49,7 @@ describe('broccoli-uglify-sourcemap', function() {
       expectFile('no-upstream-sourcemap.js').in(result);
       expectFile('no-upstream-sourcemap.map').in(result);
       expectFile('something.css').in(result);
+      expectFile('already.min.js').unminified().in(result);
     });
   });
 
@@ -60,6 +63,7 @@ describe('broccoli-uglify-sourcemap', function() {
       expectFile('no-upstream-sourcemap.js').withSourcemapURL('/maps/no-upstream-sourcemap.map').in(result);
       expectFile('no-upstream-sourcemap.map').in(result, 'maps');
       expectFile('something.css').in(result);
+      expectFile('already.min.js').unminified().in(result);
     });
   });
 
