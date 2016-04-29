@@ -19,7 +19,7 @@ function UglifyWriter (inputNodes, options) {
   if (!(this instanceof UglifyWriter)) {
     return new UglifyWriter(inputNodes, options);
   }
-  
+
   inputNodes = Array.isArray(inputNodes) ? inputNodes : [inputNodes];
 
   Plugin.call(this, inputNodes, options);
@@ -128,7 +128,7 @@ UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath, out
     debug('[finsihed]: %s %dKB in %dms', relativePath, (result.code.length / 1000), total);
 
     if (total > 20000) {
-      console.warn('[WARN] `' + relativePath + '` took: ' + total + 'ms (more then 20,000ms)');
+      console.warn('[WARN] `' + relativePath + '` took: ' + total + 'ms (more than 20,000ms)');
     }
 
 
