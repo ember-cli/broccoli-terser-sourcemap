@@ -3,6 +3,9 @@
   "version": "1.4.0",
   "description": "Broccoli filter to uglify files while preserving their sourcemaps.",
   "main": "index.js",
+  "files": [
+    "index.js"
+  ],
   "scripts": {
     "test": "mocha --inline-diffs",
     "test:debug": "mocha debug --inline-diffs"
@@ -13,7 +16,7 @@
   "dependencies": {
     "broccoli-plugin": "^1.2.1",
     "debug": "^2.2.0",
-    "lodash": "^3.10.1",
+    "lodash.merge": "^4.5.1",
     "matcher-collection": "^1.0.0",
     "mkdirp": "^0.5.0",
     "source-map-url": "^0.3.0",
