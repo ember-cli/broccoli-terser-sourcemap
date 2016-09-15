@@ -66,7 +66,7 @@ UglifyWriter.prototype.build = function () {
       if (relativePath.slice(-3) === '.js' && !writer.excludes.match(relativePath)) {
         writer.processFile(inFile, outFile, relativePath, writer.outputPath);
       } else if (relativePath.slice(-4) === '.map') {
-        if (writer.excludes.match(relativePath.slice(relativePath.length - 4) + '.js')) {
+        if (writer.excludes.match(relativePath.slice(0, -4) + '.js')) {
           // ensure .map files for excldue JS paths are also copied forward
           symlinkOrCopy.sync(inFile, outFile);
         }

@@ -35,7 +35,7 @@ describe('broccoli-uglify-sourcemap', function() {
     });
   });
 
-  it('can exclude files form getting uglified', function() {
+  it('can exclude files from getting uglified', function() {
     var tree = new uglify(fixtures, {
       exclude: ['inside/with-up*']
     });
