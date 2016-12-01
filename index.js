@@ -125,7 +125,7 @@ UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath, out
     var result = UglifyJS.minify(src, merge(opts, this.options));
     var end = new Date();
     var total = end - start;
-    debug('[finsihed]: %s %dKB in %dms', relativePath, (result.code.length / 1000), total);
+    debug('[finished]: %s %dKB in %dms', relativePath, (result.code.length / 1000), total);
 
     if (total > 20000) {
       console.warn('[WARN] `' + relativePath + '` took: ' + total + 'ms (more than 20,000ms)');
