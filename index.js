@@ -127,8 +127,8 @@ UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath, out
     var total = end - start;
     debug('[finished]: %s %dKB in %dms', relativePath, (result.code.length / 1000), total);
 
-    if (total > 20000) {
-      console.warn('[WARN] `' + relativePath + '` took: ' + total + 'ms (more than 20,000ms)');
+    if (total > 20000 && process.argv.indexOf('--silent') === -1) {
+      console.warn('[WARN] (broccoli-uglify-sourcemap) Minifying: `' + relativePath + '` took: ' + total + 'ms (more than 20,000ms)');
     }
 
 
