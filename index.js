@@ -140,14 +140,6 @@ UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath, out
   if (opts.enableSourcemaps) {
     var newSourceMap = JSON.parse(result.map);
 
-    if (origSourcesContent) {
-      // This is a workaround for https://github.com/mishoo/UglifyJS2/pull/566
-      newSourceMap.sourcesContent = origSourcesContent;
-    } else {
-      newSourceMap.sources = [ relativePath ];
-      newSourceMap.sourcesContent = [ src ];
-    }
-
     // uglify is wrong about this and always puts the maps own name
     // here.
     newSourceMap.file = path.basename(inFile);
