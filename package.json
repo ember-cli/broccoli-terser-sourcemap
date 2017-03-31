@@ -10,7 +10,7 @@
     "test": "mocha --inline-diffs",
     "test:debug": "mocha debug --inline-diffs"
   },
-  "repository": "https://github.com/ef4/broccoli-uglify-sourcemap",
+  "repository": "https://github.com/ember-cli/broccoli-uglify-sourcemap",
   "author": "Edward Faulkner <ef@alum.mit.edu>",
   "license": "MIT",
   "dependencies": {
