@@ -5,3 +5,12 @@ node_js:
   - "4"
   - "6"
   - "stable"
+
+deploy:
+  provider: npm
+  email: stefan.penner+ember-cli@gmail.com
+  api_key:
+    secure: hdNfvaHaA0mSzapY1quVvk3WFwzPIsVirzsJlQ/yJA+9CNOCvOwc3IoLe36z3P2KuqVSbhJnqsCIHaPveKnz89iCl/jXllM2lSF21M3eplMZo6vj9cc3LTI1vhexBs8Kc5Nbis3R7enkQFfGkWwm7TG1giGupG0JcMUK993bbzc=
+  on:
+    tags: true
+    repo: ember-cli/broccoli-uglify-sourcemap
