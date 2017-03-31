@@ -2,13 +2,20 @@
   "name": "broccoli-uglify-sourcemap",
   "version": "1.5.1",
   "description": "Broccoli filter to uglify files while preserving their sourcemaps.",
+  "homepage": "https://github.com/ember-cli/broccoli-uglify-sourcemap#readme",
+  "bugs": {
+    "url": "https://github.com/ember-cli/broccoli-uglify-sourcemap/issues"
+  },
   "license": "MIT",
   "author": "Edward Faulkner <ef@alum.mit.edu>",
   "files": [
     "index.js"
   ],
   "main": "index.js",
-  "repository": "https://github.com/ember-cli/broccoli-uglify-sourcemap",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ember-cli/broccoli-uglify-sourcemap.git"
+  },
   "scripts": {
     "test": "mocha --inline-diffs",
     "test:debug": "mocha debug --inline-diffs"
