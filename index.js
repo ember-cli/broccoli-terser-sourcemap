@@ -119,6 +119,10 @@ UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath, out
     origSourcesContent = JSON.parse(fs.readFileSync(opts.inSourceMap)).sourcesContent;
   }
 
+  if (this.sourceMapConfig.rootURL) {
+    opts.sourceMapUrl = this.sourceMapConfig.rootURL + mapName;
+  }
+
   try {
     var start = new Date();
     debug('[starting]: %s %dKB', relativePath, (src.length / 1000));
