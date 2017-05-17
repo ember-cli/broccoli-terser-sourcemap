@@ -8,6 +8,7 @@ var broccoli = require('broccoli');
 var mkdirp = require('mkdirp');
 
 var fixtures = path.join(__dirname, 'fixtures');
+var fixtures2 = path.join(__dirname, 'fixtures2');
 var builder;
 
 describe('broccoli-uglify-sourcemap', function() {
@@ -62,6 +63,16 @@ describe('broccoli-uglify-sourcemap', function() {
       expectFile('something.css').in(result);
     });
   });
+
+
+  it('compiles the vendor.map', function() {
+    var tree = new uglify(fixtures2, { sourceMapConfig: { mapDir: 'maps'}});
+    builder = new broccoli.Builder(tree);
+    return builder.build().then(function(result) {
+      expect(true).to.equal(true, 'couldnt build vendor.map');
+    });
+  });
+
 
   afterEach(function() {
     if (builder) {
