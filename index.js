@@ -2,7 +2,7 @@
 
 var walkSync = require('walk-sync');
 var Plugin = require('broccoli-plugin');
-var UglifyJS = require('uglify-js');
+var UglifyJS = require('uglify-es');
 var path = require('path');
 var fs = require('fs');
 var defaults = require('lodash.defaultsdeep');
