@@ -76,10 +76,6 @@ UglifyWriter.prototype.build = function () {
   return this.outputPath;
 };
 
-UglifyWriter.prototype.enableSourcemaps = function() {
-  return Boolean(this.options.uglify.sourceMap);
-};
-
 UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath, outDir) {
   var src = fs.readFileSync(inFile, 'utf-8');
   var mapName = path.basename(outFile).replace(/\.js$/,'') + '.map';
