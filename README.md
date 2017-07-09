@@ -19,14 +19,13 @@ var uglified = uglify(input);
 
 // advanced usage
 var uglified = uglify(input, {
-  mangle: true,   // defaults to true
-  compress: true, // defaults to true
-  sourceMapIncludeSources: true // defaults to true
-  exclude: [..] // array of globs, to not minify
-  //...
-  sourceMapConfig: {
-    enabled: true, // defaults to true
-    extensions: [ 'js' ] // defaults to [ 'js' ]
+  exclude: [..], // array of globs, to not minify
+  
+  uglify: {
+    mangle: false,    // defaults to true
+    compress: false,  // defaults to true
+    sourceMap: false, // defaults to true
+    //...
   }
 });
 ```
