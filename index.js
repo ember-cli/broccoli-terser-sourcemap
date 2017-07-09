@@ -1,3 +1,5 @@
+'use strict';
+
 var walkSync = require('walk-sync');
 var Plugin = require('broccoli-plugin');
 var UglifyJS = require('uglify-js');
