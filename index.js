@@ -80,16 +80,6 @@ UglifyWriter.prototype.enableSourcemaps = function() {
   return Boolean(this.options.uglify.sourceMap);
 };
 
-UglifyWriter.prototype.mapURL = function(mapName) {
-  if (this.enableSourcemaps()) {
-    if (this.options.sourceMapDir) {
-      return '/' + path.join(this.options.sourceMapDir, mapName);
-    } else {
-      return mapName;
-    }
-  }
-};
-
 UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath, outDir) {
   var src = fs.readFileSync(inFile, 'utf-8');
   var mapName = path.basename(outFile).replace(/\.js$/,'') + '.map';
@@ -104,7 +94,7 @@ UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath, out
   let options = defaults({}, this.options.uglify);
   if (options.sourceMap) {
     let filename = path.basename(inFile);
-    let url = this.mapURL(mapName);
+    let url = this.options.sourceMapDir ? '/' + path.join(this.options.sourceMapDir, mapName) : mapName;
 
     let sourceMap = { filename, url };
 
