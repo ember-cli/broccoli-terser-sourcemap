@@ -99,7 +99,6 @@ UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath, out
   var src = fs.readFileSync(inFile, 'utf-8');
   var mapName = path.basename(outFile).replace(/\.js$/,'') + '.map';
   var mapDir;
-  var origSourcesContent;
 
   if (this.sourceMapConfig.mapDir) {
     mapDir = path.join(outDir, this.sourceMapConfig.mapDir);
@@ -116,7 +115,6 @@ UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath, out
   if (opts.enableSourcemaps && srcURL.existsIn(src)) {
     var url = srcURL.getFrom(src);
     opts.inSourceMap = path.join(path.dirname(inFile), url);
-    origSourcesContent = JSON.parse(fs.readFileSync(opts.inSourceMap)).sourcesContent;
   }
 
   try {
