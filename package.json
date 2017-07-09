@@ -36,5 +36,15 @@
     "chai": "^1.10.0",
     "mocha": "^2.0.1",
     "rsvp": "^3.0.14"
+  },
+  "changelog": {
+    "repo": "ember-cli/broccoli-uglify-sourcemap",
+    "labels": {
+      "breaking": ":boom: Breaking Change",
+      "enhancement": ":rocket: Enhancement",
+      "bug": ":bug: Bug Fix",
+      "documentation": ":memo: Documentation",
+      "internal": ":house: Internal"
+    }
   }
 }
