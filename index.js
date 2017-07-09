@@ -1,9 +1,11 @@
+'use strict';
+
 var walkSync = require('walk-sync');
 var Plugin = require('broccoli-plugin');
 var UglifyJS = require('uglify-js');
 var path = require('path');
 var fs = require('fs');
-var merge = require('lodash.merge');
+var defaults = require('lodash.defaultsdeep');
 var symlinkOrCopy = require('symlink-or-copy');
 var mkdirp = require('mkdirp');
 var srcURL = require('source-map-url');
@@ -23,16 +25,12 @@ function UglifyWriter (inputNodes, options) {
   inputNodes = Array.isArray(inputNodes) ? inputNodes : [inputNodes];
 
   Plugin.call(this, inputNodes, options);
-  this.options = merge({
-    mangle: true,
-    compress: true,
-    sourceMapIncludeSources: true
-  }, options);
 
-  this.sourceMapConfig = merge({
-    enabled: true,
-    extensions: ['js']
-  }, this.options.sourceMapConfig);
+  this.options = defaults(options, {
+    uglify: {
+      sourceMap: {},
+    },
+  });
 
   this.inputNodes = inputNodes;
 
@@ -80,67 +78,50 @@ UglifyWriter.prototype.build = function () {
   return this.outputPath;
 };
 
-UglifyWriter.prototype.enableSourcemaps = function() {
-  return this.sourceMapConfig.enabled &&
-    this.sourceMapConfig.extensions.indexOf('js') > -1;
-};
-
-UglifyWriter.prototype.mapURL = function(mapName) {
-  if (this.enableSourcemaps()) {
-    if (this.sourceMapConfig.mapDir) {
-      return '/' + path.join(this.sourceMapConfig.mapDir, mapName);
-    } else {
-      return mapName;
-    }
-  }
-};
-
 UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath, outDir) {
   var src = fs.readFileSync(inFile, 'utf-8');
   var mapName = path.basename(outFile).replace(/\.js$/,'') + '.map';
-  var mapDir;
 
-  if (this.sourceMapConfig.mapDir) {
-    mapDir = path.join(outDir, this.sourceMapConfig.mapDir);
+  var mapDir;
+  if (this.options.sourceMapDir) {
+    mapDir = path.join(outDir, this.options.sourceMapDir);
   } else {
     mapDir = path.dirname(path.join(outDir, relativePath));
   }
 
-  var opts = {
-    fromString: true,
-    outSourceMap: this.mapURL(mapName),
-    enableSourcemaps: this.enableSourcemaps()
-  };
+  let options = defaults({}, this.options.uglify);
+  if (options.sourceMap) {
+    let filename = path.basename(inFile);
+    let url = this.options.sourceMapDir ? '/' + path.join(this.options.sourceMapDir, mapName) : mapName;
 
-  if (opts.enableSourcemaps && srcURL.existsIn(src)) {
-    var url = srcURL.getFrom(src);
-    opts.inSourceMap = path.join(path.dirname(inFile), url);
-  }
+    let sourceMap = { filename, url };
 
-  try {
-    var start = new Date();
-    debug('[starting]: %s %dKB', relativePath, (src.length / 1000));
-    var result = UglifyJS.minify(src, merge(opts, this.options));
-    var end = new Date();
-    var total = end - start;
-    debug('[finished]: %s %dKB in %dms', relativePath, (result.code.length / 1000), total);
-
-    if (total > 20000 && process.argv.indexOf('--silent') === -1) {
-      console.warn('[WARN] (broccoli-uglify-sourcemap) Minifying: `' + relativePath + '` took: ' + total + 'ms (more than 20,000ms)');
+    if (srcURL.existsIn(src)) {
+      let url = srcURL.getFrom(src);
+      sourceMap.content = JSON.parse(fs.readFileSync(path.join(path.dirname(inFile), url)));
     }
 
-
-  } catch(e) {
-    e.filename = relativePath;
-    throw e;
+    options = defaults(options, { sourceMap });
   }
 
-  if (opts.enableSourcemaps) {
-    var newSourceMap = JSON.parse(result.map);
+  var start = new Date();
+  debug('[starting]: %s %dKB', relativePath, (src.length / 1000));
+  var result = UglifyJS.minify(src, options);
+  var end = new Date();
+  var total = end - start;
+  debug('[finished]: %s %dKB in %dms', relativePath, (result.code.length / 1000), total);
 
-    // uglify is wrong about this and always puts the maps own name
-    // here.
-    newSourceMap.file = path.basename(inFile);
+  if (total > 20000 && process.argv.indexOf('--silent') === -1) {
+    console.warn('[WARN] (broccoli-uglify-sourcemap) Minifying: `' + relativePath + '` took: ' + total + 'ms (more than 20,000ms)');
+  }
+
+  if (result.error) {
+    result.error.filename = relativePath;
+    throw result.error;
+  }
+
+  if (options.sourceMap) {
+    var newSourceMap = JSON.parse(result.map);
 
     newSourceMap.sources = newSourceMap.sources.map(function(path){
       // If out output file has the same name as one of our original

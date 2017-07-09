@@ -24,7 +24,7 @@ describe('broccoli-uglify-sourcemap', function() {
   });
 
   it('can disable sourcemaps', function() {
-    var tree = new uglify(fixtures, { sourceMapConfig: { enabled: false } });
+    var tree = new uglify(fixtures, { uglify: { sourceMap: false } });
     builder = new broccoli.Builder(tree);
     return builder.build().then(function(result) {
       expectFile('with-upstream-sourcemap.js').withoutSourcemapURL().in(result, 'inside');
@@ -52,7 +52,7 @@ describe('broccoli-uglify-sourcemap', function() {
 
 
   it('supports alternate sourcemap location', function() {
-    var tree = new uglify(fixtures, { sourceMapConfig: { mapDir: 'maps'}});
+    var tree = new uglify(fixtures, { sourceMapDir: 'maps' });
     builder = new broccoli.Builder(tree);
     return builder.build().then(function(result) {
       expectFile('with-upstream-sourcemap.js').withSourcemapURL('/maps/with-upstream-sourcemap.map').in(result, 'inside');
