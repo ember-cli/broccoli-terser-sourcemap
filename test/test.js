@@ -3,17 +3,21 @@
 var uglify = require('..');
 var fs = require('fs');
 var path = require('path');
-var broccoli = require('broccoli');
 var mkdirp = require('mkdirp');
+var helpers = require('broccoli-test-helper');
 
 var fixtures = path.join(__dirname, 'fixtures');
-var builder;
+
+var createBuilder = helpers.createBuilder;
 
 describe('broccoli-uglify-sourcemap', function() {
+  var builder;
+
   it('generates expected output', function() {
     var tree = new uglify(fixtures);
-    builder = new broccoli.Builder(tree);
-    return builder.build().then(function(result) {
+    builder = createBuilder(tree);
+    return builder.build().then(function() {
+      var result = builder.read();
       expectFile('with-upstream-sourcemap.js').in(result, 'inside');
       expectFile('with-upstream-sourcemap.map').in(result, 'inside');
       expectFile('no-upstream-sourcemap.js').in(result);
@@ -24,8 +28,9 @@ describe('broccoli-uglify-sourcemap', function() {
 
   it('can handle ES6 code', function() {
     var tree = new uglify(fixtures);
-    builder = new broccoli.Builder(tree);
-    return builder.build().then(function(result) {
+    builder = createBuilder(tree);
+    return builder.build().then(function() {
+      var result = builder.read();
       expectFile('es6.js').in(result);
       expectFile('es6.map').in(result);
     });
@@ -33,8 +38,9 @@ describe('broccoli-uglify-sourcemap', function() {
 
   it('can disable sourcemaps', function() {
     var tree = new uglify(fixtures, { uglify: { sourceMap: false } });
-    builder = new broccoli.Builder(tree);
-    return builder.build().then(function(result) {
+    builder = createBuilder(tree);
+    return builder.build().then(function() {
+      var result = builder.read();
       expectFile('with-upstream-sourcemap.js').withoutSourcemapURL().in(result, 'inside');
       expectFile('with-upstream-sourcemap.map').notIn(result);
       expectFile('no-upstream-sourcemap.js').withoutSourcemapURL().in(result);
@@ -48,8 +54,9 @@ describe('broccoli-uglify-sourcemap', function() {
       exclude: ['inside/with-up*']
     });
 
-    builder = new broccoli.Builder(tree);
-    return builder.build().then(function(result) {
+    builder = createBuilder(tree);
+    return builder.build().then(function() {
+      var result = builder.read();
       expectFile('with-upstream-sourcemap.js').unminified().in(result, 'inside');
       expectFile('with-upstream-sourcemap.map').unminified().in(result, 'inside');
       expectFile('no-upstream-sourcemap.js').in(result);
@@ -61,8 +68,9 @@ describe('broccoli-uglify-sourcemap', function() {
 
   it('supports alternate sourcemap location', function() {
     var tree = new uglify(fixtures, { sourceMapDir: 'maps' });
-    builder = new broccoli.Builder(tree);
-    return builder.build().then(function(result) {
+    builder = createBuilder(tree);
+    return builder.build().then(function() {
+      var result = builder.read();
       expectFile('with-upstream-sourcemap.js').withSourcemapURL('/maps/with-upstream-sourcemap.map').in(result, 'inside');
       expectFile('with-upstream-sourcemap.map').in(result, 'maps');
       expectFile('no-upstream-sourcemap.js').withSourcemapURL('/maps/no-upstream-sourcemap.map').in(result);
@@ -73,7 +81,7 @@ describe('broccoli-uglify-sourcemap', function() {
 
   afterEach(function() {
     if (builder) {
-      return builder.cleanup().catch(() => {});
+      return builder.dispose();
     }
   });
 });
@@ -86,10 +94,10 @@ function expectFile(filename) {
   var expectURL;
 
   function inner(result, subdir) {
-    if (!subdir) {
-      subdir = '.';
+    if (subdir) {
+      result = result[subdir];
     }
-    var actualContent = fs.readFileSync(path.join(result.directory, subdir, filename), 'utf-8');
+    var actualContent = result[filename];
     mkdirp.sync(path.dirname(path.join(__dirname, 'actual', filename)));
     fs.writeFileSync(path.join(__dirname, 'actual', filename), actualContent);
 
@@ -115,7 +123,7 @@ function expectFile(filename) {
   }
 
   function notIn(result) {
-    expect(fs.existsSync(path.join(result.directory, filename))).toBe(false);
+    expect(result[filename]).toBe(undefined);
     return this;
   }
 
