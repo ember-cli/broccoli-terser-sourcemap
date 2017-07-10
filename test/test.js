@@ -14,20 +14,21 @@ var createBuilder = helpers.createBuilder;
 describe('broccoli-uglify-sourcemap', function() {
   var input, builder;
 
-  beforeEach(function() {
-    return createTempDir().then(_input => (input = _input));
+  beforeEach(async function() {
+    input = await createTempDir();
   });
 
-  it('generates expected output', function() {
+  it('generates expected output', async function() {
     var tree = new uglify(fixtures);
     builder = createBuilder(tree);
-    return builder.build().then(function() {
-      var result = builder.read();
-      expect(result).toMatchSnapshot();
-    });
+
+    await builder.build();
+
+    var result = builder.read();
+    expect(result).toMatchSnapshot();
   });
 
-  it('can handle ES6 code', function() {
+  it('can handle ES6 code', async function() {
     input.write({
       'es6.js': `class Foo {
   bar() {
@@ -40,48 +41,53 @@ let { bar } = Foo.prototype;`,
 
     var tree = new uglify(input.path());
     builder = createBuilder(tree);
-    return builder.build().then(function() {
-      var result = builder.read();
-      expect(result).toMatchSnapshot();
-    });
+
+    await builder.build();
+
+    var result = builder.read();
+    expect(result).toMatchSnapshot();
   });
 
-  it('can disable sourcemaps', function() {
+  it('can disable sourcemaps', async function() {
     var tree = new uglify(fixtures, { uglify: { sourceMap: false } });
     builder = createBuilder(tree);
-    return builder.build().then(function() {
-      var result = builder.read();
-      expect(result).toMatchSnapshot();
-    });
+
+    await builder.build();
+
+    var result = builder.read();
+    expect(result).toMatchSnapshot();
   });
 
-  it('can exclude files from getting uglified', function() {
+  it('can exclude files from getting uglified', async function() {
     var tree = new uglify(fixtures, {
       exclude: ['inside/with-up*']
     });
 
     builder = createBuilder(tree);
-    return builder.build().then(function() {
-      var result = builder.read();
-      expect(result).toMatchSnapshot();
-    });
+
+    await builder.build();
+
+    var result = builder.read();
+    expect(result).toMatchSnapshot();
   });
 
 
-  it('supports alternate sourcemap location', function() {
+  it('supports alternate sourcemap location', async function() {
     var tree = new uglify(fixtures, { sourceMapDir: 'maps' });
     builder = createBuilder(tree);
-    return builder.build().then(function() {
-      var result = builder.read();
-      expect(result).toMatchSnapshot();
-    });
+
+    await builder.build();
+
+    var result = builder.read();
+    expect(result).toMatchSnapshot();
   });
 
-  afterEach(function() {
-    var p = input ? input.dispose() : Promise.resolve();
-    if (builder) {
-      p = p.then(() => builder.dispose());
+  afterEach(async function() {
+    if (input) {
+      await input.dispose();
     }
-    return p;
+    if (builder) {
+      await builder.dispose();
+    }
   });
 });

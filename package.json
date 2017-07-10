@@ -33,6 +33,8 @@
     "walk-sync": "^0.1.3"
   },
   "devDependencies": {
+    "babel-jest": "^20.0.3",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
     "broccoli-test-helper": "^1.1.0",
     "jest": "^20.0.4",
     "rsvp": "^3.0.14"
@@ -53,6 +55,10 @@
     ],
     "testMatch": [
       "<rootDir>/test/test.js"
+    ],
+    "transformIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/index.js"
     ]
   }
 }
