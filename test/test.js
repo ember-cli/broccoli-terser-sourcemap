@@ -3,7 +3,6 @@
 var uglify = require('..');
 var fs = require('fs');
 var path = require('path');
-var mkdirp = require('mkdirp');
 var helpers = require('broccoli-test-helper');
 
 var fixtures = path.join(__dirname, 'fixtures');
