@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`broccoli-uglify-sourcemap can disable sourcemaps 1`] = `
+Object {
+  "inside": Object {
+    "with-upstream-sourcemap.js": "function meaningOfLife(){throw new Error(42)}function boom(){throw new Error(\\"boom\\")}function somethingElse(){throw new Error(\\"somethign else\\")}function fourth(){throw new Error(\\"fourth\\")}function third(){throw new Error(\\"oh no\\")}",
+  },
+  "no-upstream-sourcemap.js": "function meaningOfLife(){throw new Error(42)}function boom(){throw new Error(\\"boom\\")}function somethingElse(){throw new Error(\\"somethign else\\")}function fourth(){throw new Error(\\"fourth\\")}function third(){throw new Error(\\"oh no\\")}",
+  "something.css": "#id {
+    background: white;
+}",
+}
+`;
+
+exports[`broccoli-uglify-sourcemap can exclude files from getting uglified 1`] = `
+Object {
+  "inside": Object {
+    "with-upstream-sourcemap.js": "/* This is my header. */
+function meaningOfLife() {
+  var thisIsALongLocal = 42;
+  throw new Error(thisIsALongLocal);
+}
+
+function boom() {
+  throw new Error('boom');
+}
+function somethingElse() {
+  throw new Error(\\"somethign else\\");
+}
+
+// Hello world
+
+function fourth(){
+  throw new Error('fourth');
+}
+function third(){
+  throw new Error(\\"oh no\\");
+}
+//# sourceMappingURL=with-upstream-sourcemap.map",
+    "with-upstream-sourcemap.map": "{\\"version\\":3,\\"sources\\":[\\"/inner/first.js\\",\\"/inner/second.js\\",\\"/other/fourth.js\\",\\"/other/third.js\\"],\\"sourcesContent\\":[\\"function meaningOfLife() {\\\\n  var thisIsALongLocal = 42;\\\\n  throw new Error(thisIsALongLocal);\\\\n}\\\\n\\\\nfunction boom() {\\\\n  throw new Error('boom');\\\\n}\\\\n\\",\\"function somethingElse() {\\\\n  throw new Error(\\\\\\"somethign else\\\\\\");\\\\n}\\\\n\\",\\"\\\\n// Hello world\\\\n\\\\nfunction fourth(){\\\\n  throw new Error('fourth');\\\\n}\\\\n\\",\\"function third(){\\\\n  throw new Error(\\\\\\"oh no\\\\\\");\\\\n}\\\\n\\"],\\"names\\":[],\\"mappings\\":\\";AAAA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;ACPA;AACA;AACA;ACFA;AACA;AACA;AACA;AACA;AACA;ACLA;AACA;AACA;\\",\\"file\\":\\"with-upstream-sourcemap.js\\"}",
+  },
+  "no-upstream-sourcemap.js": "function meaningOfLife(){throw new Error(42)}function boom(){throw new Error(\\"boom\\")}function somethingElse(){throw new Error(\\"somethign else\\")}function fourth(){throw new Error(\\"fourth\\")}function third(){throw new Error(\\"oh no\\")}
+//# sourceMappingURL=no-upstream-sourcemap.map",
+  "no-upstream-sourcemap.map": "{\\"version\\":3,\\"sources\\":[\\"0\\"],\\"names\\":[\\"meaningOfLife\\",\\"Error\\",\\"boom\\",\\"somethingElse\\",\\"fourth\\",\\"third\\"],\\"mappings\\":\\"AACA,SAASA,gBAEP,MAAM,IAAIC,MADa,IAIzB,SAASC,OACP,MAAM,IAAID,MAAM,QAGlB,SAASE,gBACP,MAAM,IAAIF,MAAM,kBAMlB,SAASG,SACP,MAAM,IAAIH,MAAM,UAGlB,SAASI,QACP,MAAM,IAAIJ,MAAM\\",\\"file\\":\\"no-upstream-sourcemap.js\\"}",
+  "something.css": "#id {
+    background: white;
+}",
+}
+`;
+
+exports[`broccoli-uglify-sourcemap can handle ES6 code 1`] = `
+Object {
+  "es6.js": "class Foo{bar(){console.log(this.baz)}}let{bar:bar}=Foo.prototype;
+//# sourceMappingURL=es6.map",
+  "es6.map": "{\\"version\\":3,\\"sources\\":[\\"0\\"],\\"names\\":[\\"Foo\\",\\"[object Object]\\",\\"console\\",\\"log\\",\\"this\\",\\"baz\\",\\"bar\\",\\"prototype\\"],\\"mappings\\":\\"MAAMA,IACJC,MACEC,QAAQC,IAAIC,KAAKC,MAIrB,IAAIC,IAAEA,KAAQN,IAAIO\\",\\"file\\":\\"es6.js\\"}",
+}
+`;
+
+exports[`broccoli-uglify-sourcemap generates expected output 1`] = `
+Object {
+  "inside": Object {
+    "with-upstream-sourcemap.js": "function meaningOfLife(){throw new Error(42)}function boom(){throw new Error(\\"boom\\")}function somethingElse(){throw new Error(\\"somethign else\\")}function fourth(){throw new Error(\\"fourth\\")}function third(){throw new Error(\\"oh no\\")}
+//# sourceMappingURL=with-upstream-sourcemap.map",
+    "with-upstream-sourcemap.map": "{\\"version\\":3,\\"sources\\":[\\"/inner/first.js\\",\\"/inner/second.js\\",\\"/other/fourth.js\\",\\"/other/third.js\\"],\\"names\\":[\\"meaningOfLife\\",\\"Error\\",\\"boom\\",\\"somethingElse\\",\\"fourth\\",\\"third\\"],\\"mappings\\":\\"AAAA,SAAAA,gBAEA,MAAA,IAAAC,MADA,IAIA,SAAAC,OACA,MAAA,IAAAD,MAAA,QCNA,SAAAE,gBACA,MAAA,IAAAF,MAAA,kBCEA,SAAAG,SACA,MAAA,IAAAH,MAAA,UCJA,SAAAI,QACA,MAAA,IAAAJ,MAAA\\",\\"file\\":\\"with-upstream-sourcemap.js\\",\\"sourcesContent\\":[\\"function meaningOfLife() {\\\\n  var thisIsALongLocal = 42;\\\\n  throw new Error(thisIsALongLocal);\\\\n}\\\\n\\\\nfunction boom() {\\\\n  throw new Error('boom');\\\\n}\\\\n\\",\\"function somethingElse() {\\\\n  throw new Error(\\\\\\"somethign else\\\\\\");\\\\n}\\\\n\\",\\"\\\\n// Hello world\\\\n\\\\nfunction fourth(){\\\\n  throw new Error('fourth');\\\\n}\\\\n\\",\\"function third(){\\\\n  throw new Error(\\\\\\"oh no\\\\\\");\\\\n}\\\\n\\"]}",
+  },
+  "no-upstream-sourcemap.js": "function meaningOfLife(){throw new Error(42)}function boom(){throw new Error(\\"boom\\")}function somethingElse(){throw new Error(\\"somethign else\\")}function fourth(){throw new Error(\\"fourth\\")}function third(){throw new Error(\\"oh no\\")}
+//# sourceMappingURL=no-upstream-sourcemap.map",
+  "no-upstream-sourcemap.map": "{\\"version\\":3,\\"sources\\":[\\"0\\"],\\"names\\":[\\"meaningOfLife\\",\\"Error\\",\\"boom\\",\\"somethingElse\\",\\"fourth\\",\\"third\\"],\\"mappings\\":\\"AACA,SAASA,gBAEP,MAAM,IAAIC,MADa,IAIzB,SAASC,OACP,MAAM,IAAID,MAAM,QAGlB,SAASE,gBACP,MAAM,IAAIF,MAAM,kBAMlB,SAASG,SACP,MAAM,IAAIH,MAAM,UAGlB,SAASI,QACP,MAAM,IAAIJ,MAAM\\",\\"file\\":\\"no-upstream-sourcemap.js\\"}",
+  "something.css": "#id {
+    background: white;
+}",
+}
+`;
+
+exports[`broccoli-uglify-sourcemap supports alternate sourcemap location 1`] = `
+Object {
+  "inside": Object {
+    "with-upstream-sourcemap.js": "function meaningOfLife(){throw new Error(42)}function boom(){throw new Error(\\"boom\\")}function somethingElse(){throw new Error(\\"somethign else\\")}function fourth(){throw new Error(\\"fourth\\")}function third(){throw new Error(\\"oh no\\")}
+//# sourceMappingURL=/maps/with-upstream-sourcemap.map",
+  },
+  "maps": Object {
+    "no-upstream-sourcemap.map": "{\\"version\\":3,\\"sources\\":[\\"0\\"],\\"names\\":[\\"meaningOfLife\\",\\"Error\\",\\"boom\\",\\"somethingElse\\",\\"fourth\\",\\"third\\"],\\"mappings\\":\\"AACA,SAASA,gBAEP,MAAM,IAAIC,MADa,IAIzB,SAASC,OACP,MAAM,IAAID,MAAM,QAGlB,SAASE,gBACP,MAAM,IAAIF,MAAM,kBAMlB,SAASG,SACP,MAAM,IAAIH,MAAM,UAGlB,SAASI,QACP,MAAM,IAAIJ,MAAM\\",\\"file\\":\\"no-upstream-sourcemap.js\\"}",
+    "with-upstream-sourcemap.map": "{\\"version\\":3,\\"sources\\":[\\"/inner/first.js\\",\\"/inner/second.js\\",\\"/other/fourth.js\\",\\"/other/third.js\\"],\\"names\\":[\\"meaningOfLife\\",\\"Error\\",\\"boom\\",\\"somethingElse\\",\\"fourth\\",\\"third\\"],\\"mappings\\":\\"AAAA,SAAAA,gBAEA,MAAA,IAAAC,MADA,IAIA,SAAAC,OACA,MAAA,IAAAD,MAAA,QCNA,SAAAE,gBACA,MAAA,IAAAF,MAAA,kBCEA,SAAAG,SACA,MAAA,IAAAH,MAAA,UCJA,SAAAI,QACA,MAAA,IAAAJ,MAAA\\",\\"file\\":\\"with-upstream-sourcemap.js\\",\\"sourcesContent\\":[\\"function meaningOfLife() {\\\\n  var thisIsALongLocal = 42;\\\\n  throw new Error(thisIsALongLocal);\\\\n}\\\\n\\\\nfunction boom() {\\\\n  throw new Error('boom');\\\\n}\\\\n\\",\\"function somethingElse() {\\\\n  throw new Error(\\\\\\"somethign else\\\\\\");\\\\n}\\\\n\\",\\"\\\\n// Hello world\\\\n\\\\nfunction fourth(){\\\\n  throw new Error('fourth');\\\\n}\\\\n\\",\\"function third(){\\\\n  throw new Error(\\\\\\"oh no\\\\\\");\\\\n}\\\\n\\"]}",
+  },
+  "no-upstream-sourcemap.js": "function meaningOfLife(){throw new Error(42)}function boom(){throw new Error(\\"boom\\")}function somethingElse(){throw new Error(\\"somethign else\\")}function fourth(){throw new Error(\\"fourth\\")}function third(){throw new Error(\\"oh no\\")}
+//# sourceMappingURL=/maps/no-upstream-sourcemap.map",
+  "something.css": "#id {
+    background: white;
+}",
+}
+`;

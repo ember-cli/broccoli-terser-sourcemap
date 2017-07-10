@@ -8,31 +8,41 @@ var helpers = require('broccoli-test-helper');
 
 var fixtures = path.join(__dirname, 'fixtures');
 
+var createTempDir = helpers.createTempDir;
 var createBuilder = helpers.createBuilder;
 
 describe('broccoli-uglify-sourcemap', function() {
-  var builder;
+  var input, builder;
+
+  beforeEach(function() {
+    return createTempDir().then(_input => (input = _input));
+  });
 
   it('generates expected output', function() {
     var tree = new uglify(fixtures);
     builder = createBuilder(tree);
     return builder.build().then(function() {
       var result = builder.read();
-      expectFile('with-upstream-sourcemap.js').in(result, 'inside');
-      expectFile('with-upstream-sourcemap.map').in(result, 'inside');
-      expectFile('no-upstream-sourcemap.js').in(result);
-      expectFile('no-upstream-sourcemap.map').in(result);
-      expectFile('something.css').in(result);
+      expect(result).toMatchSnapshot();
     });
   });
 
   it('can handle ES6 code', function() {
-    var tree = new uglify(fixtures);
+    input.write({
+      'es6.js': `class Foo {
+  bar() {
+    console.log(this.baz);
+  }
+}
+
+let { bar } = Foo.prototype;`,
+    });
+
+    var tree = new uglify(input.path());
     builder = createBuilder(tree);
     return builder.build().then(function() {
       var result = builder.read();
-      expectFile('es6.js').in(result);
-      expectFile('es6.map').in(result);
+      expect(result).toMatchSnapshot();
     });
   });
 
@@ -41,11 +51,7 @@ describe('broccoli-uglify-sourcemap', function() {
     builder = createBuilder(tree);
     return builder.build().then(function() {
       var result = builder.read();
-      expectFile('with-upstream-sourcemap.js').withoutSourcemapURL().in(result, 'inside');
-      expectFile('with-upstream-sourcemap.map').notIn(result);
-      expectFile('no-upstream-sourcemap.js').withoutSourcemapURL().in(result);
-      expectFile('no-upstream-sourcemap.map').notIn(result);
-      expectFile('something.css').in(result);
+      expect(result).toMatchSnapshot();
     });
   });
 
@@ -57,11 +63,7 @@ describe('broccoli-uglify-sourcemap', function() {
     builder = createBuilder(tree);
     return builder.build().then(function() {
       var result = builder.read();
-      expectFile('with-upstream-sourcemap.js').unminified().in(result, 'inside');
-      expectFile('with-upstream-sourcemap.map').unminified().in(result, 'inside');
-      expectFile('no-upstream-sourcemap.js').in(result);
-      expectFile('no-upstream-sourcemap.map').in(result);
-      expectFile('something.css').in(result);
+      expect(result).toMatchSnapshot();
     });
   });
 
@@ -71,82 +73,15 @@ describe('broccoli-uglify-sourcemap', function() {
     builder = createBuilder(tree);
     return builder.build().then(function() {
       var result = builder.read();
-      expectFile('with-upstream-sourcemap.js').withSourcemapURL('/maps/with-upstream-sourcemap.map').in(result, 'inside');
-      expectFile('with-upstream-sourcemap.map').in(result, 'maps');
-      expectFile('no-upstream-sourcemap.js').withSourcemapURL('/maps/no-upstream-sourcemap.map').in(result);
-      expectFile('no-upstream-sourcemap.map').in(result, 'maps');
-      expectFile('something.css').in(result);
+      expect(result).toMatchSnapshot();
     });
   });
 
   afterEach(function() {
+    var p = input ? input.dispose() : Promise.resolve();
     if (builder) {
-      return builder.dispose();
+      p = p.then(() => builder.dispose());
     }
+    return p;
   });
 });
-
-
-
-function expectFile(filename) {
-  var stripURL = false;
-  var minified = true;
-  var expectURL;
-
-  function inner(result, subdir) {
-    if (subdir) {
-      result = result[subdir];
-    }
-    var actualContent = result[filename];
-    mkdirp.sync(path.dirname(path.join(__dirname, 'actual', filename)));
-    fs.writeFileSync(path.join(__dirname, 'actual', filename), actualContent);
-
-    var expectedContent;
-    try {
-      var expectedPath = minified ? 'expected' : 'expected/unminified';
-      expectedContent = fs.readFileSync(path.join(__dirname, expectedPath, filename), 'utf-8');
-      if (stripURL) {
-        expectedContent = expectedContent.replace(/\s*\/\/# sourceMappingURL=.*$/, '');
-      }
-      if (expectURL) {
-        expectedContent = expectedContent.replace(/(\s*\/\/# sourceMappingURL=).*$/, function(all, capture) {
-          return capture + expectURL;
-        });
-      }
-
-    } catch (err) {
-      console.warn("Missing expcted file: " + path.join(__dirname, 'expected', filename));
-    }
-
-    expect(actualContent).toBe(expectedContent);
-    return this;
-  }
-
-  function notIn(result) {
-    expect(result[filename]).toBe(undefined);
-    return this;
-  }
-
-  function withoutSourcemapURL() {
-    stripURL = true;
-    return this;
-  }
-
-  function withSourcemapURL(url) {
-    expectURL = url;
-    return this;
-  }
-
-  function unminified() {
-    minified = false;
-    return this;
-  }
-
-  return {
-    unminified: unminified,
-    in: inner,
-    notIn: notIn,
-    withoutSourcemapURL: withoutSourcemapURL,
-    withSourcemapURL: withSourcemapURL
-  };
-}

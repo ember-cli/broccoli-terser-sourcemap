@@ -47,7 +47,6 @@
   },
   "jest": {
     "modulePathIgnorePatterns": [
-      "<rootDir>/test/actual",
       "<rootDir>/tmp"
     ],
     "testMatch": [
