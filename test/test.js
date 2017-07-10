@@ -19,13 +19,11 @@ describe('broccoli-uglify-sourcemap', function() {
   });
 
   it('generates expected output', async function() {
-    var tree = new uglify(fixtures);
-    builder = createBuilder(tree);
+    builder = createBuilder(new uglify(fixtures));
 
     await builder.build();
 
-    var result = builder.read();
-    expect(result).toMatchSnapshot();
+    expect(builder.read()).toMatchSnapshot();
   });
 
   it('can handle ES6 code', async function() {
@@ -39,47 +37,38 @@ describe('broccoli-uglify-sourcemap', function() {
 let { bar } = Foo.prototype;`,
     });
 
-    var tree = new uglify(input.path());
-    builder = createBuilder(tree);
+    builder = createBuilder(new uglify(input.path()));
 
     await builder.build();
 
-    var result = builder.read();
-    expect(result).toMatchSnapshot();
+    expect(builder.read()).toMatchSnapshot();
   });
 
   it('can disable sourcemaps', async function() {
-    var tree = new uglify(fixtures, { uglify: { sourceMap: false } });
-    builder = createBuilder(tree);
+    builder = createBuilder(new uglify(fixtures, { uglify: { sourceMap: false } }));
 
     await builder.build();
 
-    var result = builder.read();
-    expect(result).toMatchSnapshot();
+    expect(builder.read()).toMatchSnapshot();
   });
 
   it('can exclude files from getting uglified', async function() {
-    var tree = new uglify(fixtures, {
+    builder = createBuilder(new uglify(fixtures, {
       exclude: ['inside/with-up*']
-    });
-
-    builder = createBuilder(tree);
+    }));
 
     await builder.build();
 
-    var result = builder.read();
-    expect(result).toMatchSnapshot();
+    expect(builder.read()).toMatchSnapshot();
   });
 
 
   it('supports alternate sourcemap location', async function() {
-    var tree = new uglify(fixtures, { sourceMapDir: 'maps' });
-    builder = createBuilder(tree);
+    builder = createBuilder(new uglify(fixtures, { sourceMapDir: 'maps' }));
 
     await builder.build();
 
-    var result = builder.read();
-    expect(result).toMatchSnapshot();
+    expect(builder.read()).toMatchSnapshot();
   });
 
   afterEach(async function() {
