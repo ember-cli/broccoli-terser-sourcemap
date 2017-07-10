@@ -1,11 +1,20 @@
-## v2.0.0 (Unreleased)
+## v2.0.0-beta.2 (2017-07-10)
 
-#### :rocket: Enhancement
+#### :boom: Breaking Change
+* [#47](https://github.com/ember-cli/broccoli-uglify-sourcemap/pull/47) Use uglify-es instead of uglify-js. ([@fusion2004](https://github.com/fusion2004))
+
+#### Committers: 1
+- Mark Oleson ([fusion2004](https://github.com/fusion2004))
+
+
+## v2.0.0-beta.1 (2017-07-09)
+
+#### :boom: Breaking Change
 * [#49](https://github.com/ember-cli/broccoli-uglify-sourcemap/pull/49) Update to "uglify-js" v3.0.24. ([@Turbo87](https://github.com/Turbo87))
-* [#45](https://github.com/ember-cli/broccoli-uglify-sourcemap/pull/45) CI: Use "auto-dist-tag" for deployment. ([@Turbo87](https://github.com/Turbo87))
 
 #### :house: Internal
 * [#48](https://github.com/ember-cli/broccoli-uglify-sourcemap/pull/48) Remove unused "origSourcesContent" variable. ([@Turbo87](https://github.com/Turbo87))
+* [#45](https://github.com/ember-cli/broccoli-uglify-sourcemap/pull/45) CI: Use "auto-dist-tag" for deployment. ([@Turbo87](https://github.com/Turbo87))
 
 #### Committers: 1
 - Tobias Bieniek ([Turbo87](https://github.com/Turbo87))
