@@ -17,7 +17,8 @@
     "url": "git+https://github.com/ember-cli/broccoli-uglify-sourcemap.git"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watchAll"
   },
   "dependencies": {
     "broccoli-plugin": "^1.2.1",
