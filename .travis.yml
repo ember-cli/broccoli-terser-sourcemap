@@ -6,6 +6,9 @@ node_js:
   - "6"
   - "stable"
 
+script:
+  - yarn run test:coverage
+
 before_deploy:
   - npm install -g auto-dist-tag
   - auto-dist-tag --write
