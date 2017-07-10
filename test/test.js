@@ -23,6 +23,15 @@ describe('broccoli-uglify-sourcemap', function() {
     });
   });
 
+  it('can handle ES6 code', function() {
+    var tree = new uglify(fixtures);
+    builder = new broccoli.Builder(tree);
+    return builder.build().then(function(result) {
+      expectFile('es6.js').in(result);
+      expectFile('es6.map').in(result);
+    });
+  });
+
   it('can disable sourcemaps', function() {
     var tree = new uglify(fixtures, { uglify: { sourceMap: false } });
     builder = new broccoli.Builder(tree);

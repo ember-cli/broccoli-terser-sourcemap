@@ -486,9 +486,9 @@ type-is@~1.5.1:
     media-typer "0.3.0"
     mime-types "~2.0.9"
 
-uglify-js@^3.0.24:
+uglify-es@^3.0.24:
   version "3.0.24"
-  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.0.24.tgz#ee93400ad9857fb7a1671778db83f6a23f033121"
+  resolved "https://registry.yarnpkg.com/uglify-es/-/uglify-es-3.0.24.tgz#fab5dccff6108df71d9573012ef65c740cb97cdc"
   dependencies:
     commander "~2.9.0"
     source-map "~0.5.1"
