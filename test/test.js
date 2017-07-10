@@ -1,6 +1,5 @@
 /* global describe, afterEach, it, expect */
 
-var expect = require('chai').expect;  // jshint ignore:line
 var uglify = require('..');
 var fs = require('fs');
 var path = require('path');
@@ -74,7 +73,7 @@ describe('broccoli-uglify-sourcemap', function() {
 
   afterEach(function() {
     if (builder) {
-      return builder.cleanup();
+      return builder.cleanup().catch(() => {});
     }
   });
 });
@@ -111,12 +110,12 @@ function expectFile(filename) {
       console.warn("Missing expcted file: " + path.join(__dirname, 'expected', filename));
     }
 
-    expect(actualContent).to.equal(expectedContent, "discrepancy in " + filename);
+    expect(actualContent).toBe(expectedContent);
     return this;
   }
 
   function notIn(result) {
-    expect(fs.existsSync(path.join(result.directory, filename))).to.equal(false);
+    expect(fs.existsSync(path.join(result.directory, filename))).toBe(false);
     return this;
   }
 
