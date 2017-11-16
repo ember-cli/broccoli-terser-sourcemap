@@ -17,6 +17,8 @@ module.exports = UglifyWriter;
 UglifyWriter.prototype = Object.create(Plugin.prototype);
 UglifyWriter.prototype.constructor = UglifyWriter;
 
+const silent = process.argv.indexOf('--silent') !== -1;
+
 function UglifyWriter (inputNodes, options) {
   if (!(this instanceof UglifyWriter)) {
     return new UglifyWriter(inputNodes, options);
@@ -101,6 +103,8 @@ UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath, out
       let sourceMapPath = path.join(path.dirname(inFile), url);
       if (fs.existsSync(sourceMapPath)) {
         sourceMap.content = JSON.parse(fs.readFileSync(sourceMapPath));
+      } else if (!silent) {
+        console.warn(`[WARN] (broccoli-uglify-sourcemap) "${url}" referenced in "${relativePath}" could not be found`);
       }
     }
 
@@ -114,7 +118,7 @@ UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath, out
   var total = end - start;
   debug('[finished]: %s %dKB in %dms', relativePath, (result.code.length / 1000), total);
 
-  if (total > 20000 && process.argv.indexOf('--silent') === -1) {
+  if (total > 20000 && !silent) {
     console.warn('[WARN] (broccoli-uglify-sourcemap) Minifying: `' + relativePath + '` took: ' + total + 'ms (more than 20,000ms)');
   }
 
