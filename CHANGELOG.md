@@ -1,5 +1,4 @@
-## v2.0.0 (2017-10-03)
-
+# Changelog
 
 ## v2.0.1 (2017-11-16)
 
@@ -9,7 +8,7 @@
 #### Committers: 1
 - Tobias Bieniek ([Turbo87](https://github.com/Turbo87))
 
-## v2.0.0
+## v2.0.0 (2017-10-03)
 
 #### :rocket: Enhancement
 * [#52](https://github.com/ember-cli/broccoli-uglify-sourcemap/pull/52) Update dependencies. ([@Turbo87](https://github.com/Turbo87))
