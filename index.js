@@ -98,7 +98,10 @@ UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath, out
 
     if (srcURL.existsIn(src)) {
       let url = srcURL.getFrom(src);
-      sourceMap.content = JSON.parse(fs.readFileSync(path.join(path.dirname(inFile), url)));
+      let sourceMapPath = path.join(path.dirname(inFile), url);
+      if (fs.existsSync(sourceMapPath)) {
+        sourceMap.content = JSON.parse(fs.readFileSync(sourceMapPath));
+      }
     }
 
     options = defaults(options, { sourceMap });
