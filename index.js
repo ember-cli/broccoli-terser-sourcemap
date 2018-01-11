@@ -100,10 +100,11 @@ UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath, out
 
     if (srcURL.existsIn(src)) {
       let url = srcURL.getFrom(src);
-      let lastUrl = srcURL.getFrom(src);
+      let lastUrl = null;
       // Make sure vendor.map is being used because vendor.js can have multiple sourceMappingURL if modules also have it.
       while (url && url.match(/.+?(?=\.map$)/)[0] !== relativePath.match(/(.*\/)?(.+)\.js/)[2]) {
-        src = srcURL.removeFrom(src)
+        lastUrl = url;
+        src = srcURL.removeFrom(src);
         url = srcURL.getFrom(src);
       }
       // If there is no map url which has an identical name with the js file, use the last one.
