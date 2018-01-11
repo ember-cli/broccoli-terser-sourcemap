@@ -116,8 +116,6 @@ UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath, out
   var result = UglifyJS.minify(src, options);
   var end = new Date();
   var total = end - start;
-  debug('[finished]: %s %dKB in %dms', relativePath, (result.code.length / 1000), total);
-
   if (total > 20000 && !silent) {
     console.warn('[WARN] (broccoli-uglify-sourcemap) Minifying: `' + relativePath + '` took: ' + total + 'ms (more than 20,000ms)');
   }
@@ -126,6 +124,8 @@ UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath, out
     result.error.filename = relativePath;
     throw result.error;
   }
+
+  debug('[finished]: %s %dKB in %dms', relativePath, (result.code.length / 1000), total);
 
   if (options.sourceMap) {
     var newSourceMap = JSON.parse(result.map);
