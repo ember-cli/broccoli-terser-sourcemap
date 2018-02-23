@@ -25,6 +25,14 @@ describe('broccoli-uglify-sourcemap', function() {
     expect(builder.read()).toMatchSnapshot();
   });
 
+  it('generates expected output async', async function() {
+    builder = createBuilder(new uglify(fixtures, { async: true }));
+
+    await builder.build();
+
+    expect(builder.read()).toMatchSnapshot();
+  });
+
   it('can handle ES6 code', async function() {
     input.write({
       'es6.js': `class Foo {
