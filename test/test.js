@@ -6,6 +6,7 @@ var path = require('path');
 var helpers = require('broccoli-test-helper');
 
 var fixtures = path.join(__dirname, 'fixtures');
+var fixturesError = path.join(__dirname, 'fixtures-error');
 
 var createTempDir = helpers.createTempDir;
 var createBuilder = helpers.createBuilder;
@@ -76,6 +77,54 @@ let { bar } = Foo.prototype;`,
     await builder.build();
 
     expect(builder.read()).toMatchSnapshot();
+  });
+
+  it('shuts down the workerpool', async function() {
+    var testUglify = new uglify(fixtures, { async: true });
+    builder = createBuilder(testUglify);
+
+    await builder.build();
+
+    expect(builder.read()).toMatchSnapshot();
+    expect(testUglify.pool.stats().totalWorkers).toEqual(0);
+  });
+
+  describe('on error', function() {
+    it('rejects with BuildError', async function() {
+      builder = createBuilder(new uglify(fixturesError, {}));
+
+      var shouldError;
+      await builder.build()
+        .catch(err => {
+          shouldError = err;
+        });
+      expect(shouldError.name).toEqual('BuildError');
+
+      expect(builder.read()).toMatchSnapshot();
+    });
+
+    it('rejects with BuildError async', async function() {
+      builder = createBuilder(new uglify(fixturesError, { async: true }));
+
+      var shouldError;
+      await builder.build()
+        .catch(err => {
+          shouldError = err;
+        });
+      expect(shouldError.name).toEqual('BuildError');
+
+      expect(builder.read()).toMatchSnapshot();
+    });
+
+    it('shuts down the workerpool', async function() {
+      var testUglify = new uglify(fixturesError, { async: true });
+      builder = createBuilder(testUglify);
+
+      await builder.build().catch(err => {});
+
+      expect(builder.read()).toMatchSnapshot();
+      expect(testUglify.pool.stats().totalWorkers).toEqual(0);
+    });
   });
 
   afterEach(async function() {

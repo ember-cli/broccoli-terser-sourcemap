@@ -107,12 +107,18 @@ UglifyWriter.prototype.build = function () {
       // files are finished processing, shut down the workers
       writer.pool.terminate();
       return writer.outputPath;
+    })
+    .catch((e) => {
+      // make sure to shut down the workers on error
+      writer.pool.terminate();
+      throw e;
     });
 };
 
 UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath, outDir) {
   // don't run this in the workerpool if concurrency is disabled (can set JOBS <= 1)
   if (this.async && this.concurrency > 1) {
+    // each of these arguments is a string, which can be sent to the worker process as-is
     return this.pool.exec('processFileParallel', [inFile, outFile, relativePath, outDir, silent, this.options]);
   }
   return processFile(inFile, outFile, relativePath, outDir, silent, this.options);
