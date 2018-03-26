@@ -41,9 +41,8 @@ function UglifyWriter (inputNodes, options) {
   });
 
   // consumers of this plugin can opt-in to async and concurrent behavior
-  // TODO docs in the README
   this.async = (this.options.async === true);
-  this.concurrency = this.options.concurrency || Number(process.env.JOBS) || Math.max(require('os').cpus().length - 1, 1);
+  this.concurrency = Number(process.env.JOBS) || this.options.concurrency || Math.max(require('os').cpus().length - 1, 1);
 
   // create a worker pool using an external worker script
   this.pool = workerpool.pool(path.join(__dirname, 'lib', 'worker.js'), { maxWorkers: this.concurrency });
