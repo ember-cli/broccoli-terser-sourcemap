@@ -11,6 +11,10 @@ var mkdirp = require('mkdirp');
 var srcURL = require('source-map-url');
 var MatcherCollection = require('matcher-collection');
 var debug = require('debug')('broccoli-uglify-sourcemap');
+var queue = require('async-promise-queue');
+var workerpool  = require('workerpool');
+
+var processFile = require('./lib/process-file');
 
 module.exports = UglifyWriter;
 
@@ -18,6 +22,8 @@ UglifyWriter.prototype = Object.create(Plugin.prototype);
 UglifyWriter.prototype.constructor = UglifyWriter;
 
 const silent = process.argv.indexOf('--silent') !== -1;
+
+const worker = queue.async.asyncify((doWork) => doWork());
 
 function UglifyWriter (inputNodes, options) {
   if (!(this instanceof UglifyWriter)) {
@@ -33,6 +39,14 @@ function UglifyWriter (inputNodes, options) {
       sourceMap: {},
     },
   });
+
+  // consumers of this plugin can opt-in to async and concurrent behavior
+  // TODO docs in the README
+  this.async = (this.options.async === true);
+  this.concurrency = this.options.concurrency || Number(process.env.JOBS) || Math.max(require('os').cpus().length - 1, 1);
+
+  // create a worker pool using an external worker script
+  this.pool = workerpool.pool(path.join(__dirname, 'lib', 'worker.js'), { maxWorkers: this.concurrency });
 
   this.inputNodes = inputNodes;
 
@@ -53,6 +67,9 @@ var MatchNothing = {
 UglifyWriter.prototype.build = function () {
   var writer = this;
 
+  // when options.async === true, allow processFile() operations to complete asynchronously
+  var pendingWork = [];
+
   this.inputPaths.forEach(function(inputPath) {
     walkSync(inputPath).forEach(function(relativePath) {
       if (relativePath.slice(-1) === '/') {
@@ -64,7 +81,15 @@ UglifyWriter.prototype.build = function () {
       mkdirp.sync(path.dirname(outFile));
 
       if (relativePath.slice(-3) === '.js' && !writer.excludes.match(relativePath)) {
-        writer.processFile(inFile, outFile, relativePath, writer.outputPath);
+        // wrap this in a function so it doesn't actually run yet, and can be throttled
+        var uglifyOperation = function() {
+          return writer.processFile(inFile, outFile, relativePath, writer.outputPath);
+        };
+        if (writer.async) {
+          pendingWork.push(uglifyOperation);
+          return;
+        }
+        return uglifyOperation();
       } else if (relativePath.slice(-4) === '.map') {
         if (writer.excludes.match(relativePath.slice(0, -4) + '.js')) {
           // ensure .map files for excluded JS paths are also copied forward
@@ -77,70 +102,24 @@ UglifyWriter.prototype.build = function () {
     });
   });
 
-  return this.outputPath;
+  return queue(worker, pendingWork, writer.concurrency)
+    .then((/* results */) => {
+      // files are finished processing, shut down the workers
+      writer.pool.terminate();
+      return writer.outputPath;
+    })
+    .catch((e) => {
+      // make sure to shut down the workers on error
+      writer.pool.terminate();
+      throw e;
+    });
 };
 
 UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath, outDir) {
-  var src = fs.readFileSync(inFile, 'utf-8');
-  var mapName = path.basename(outFile).replace(/\.js$/,'') + '.map';
-
-  var mapDir;
-  if (this.options.sourceMapDir) {
-    mapDir = path.join(outDir, this.options.sourceMapDir);
-  } else {
-    mapDir = path.dirname(path.join(outDir, relativePath));
+  // don't run this in the workerpool if concurrency is disabled (can set JOBS <= 1)
+  if (this.async && this.concurrency > 1) {
+    // each of these arguments is a string, which can be sent to the worker process as-is
+    return this.pool.exec('processFileParallel', [inFile, outFile, relativePath, outDir, silent, this.options]);
   }
-
-  let options = defaults({}, this.options.uglify);
-  if (options.sourceMap) {
-    let filename = path.basename(inFile);
-    let url = this.options.sourceMapDir ? '/' + path.join(this.options.sourceMapDir, mapName) : mapName;
-
-    let sourceMap = { filename, url };
-
-    if (srcURL.existsIn(src)) {
-      let url = srcURL.getFrom(src);
-      let sourceMapPath = path.join(path.dirname(inFile), url);
-      if (fs.existsSync(sourceMapPath)) {
-        sourceMap.content = JSON.parse(fs.readFileSync(sourceMapPath));
-      } else if (!silent) {
-        console.warn(`[WARN] (broccoli-uglify-sourcemap) "${url}" referenced in "${relativePath}" could not be found`);
-      }
-    }
-
-    options = defaults(options, { sourceMap });
-  }
-
-  var start = new Date();
-  debug('[starting]: %s %dKB', relativePath, (src.length / 1000));
-  var result = UglifyJS.minify(src, options);
-  var end = new Date();
-  var total = end - start;
-  if (total > 20000 && !silent) {
-    console.warn('[WARN] (broccoli-uglify-sourcemap) Minifying: `' + relativePath + '` took: ' + total + 'ms (more than 20,000ms)');
-  }
-
-  if (result.error) {
-    result.error.filename = relativePath;
-    throw result.error;
-  }
-
-  debug('[finished]: %s %dKB in %dms', relativePath, (result.code.length / 1000), total);
-
-  if (options.sourceMap) {
-    var newSourceMap = JSON.parse(result.map);
-
-    newSourceMap.sources = newSourceMap.sources.map(function(path){
-      // If out output file has the same name as one of our original
-      // sources, they will shadow eachother in Dev Tools. So instead we
-      // alter the reference to the upstream file.
-      if (path === relativePath) {
-        path = path.replace(/\.js$/, '-orig.js');
-      }
-      return path;
-    });
-    mkdirp.sync(mapDir);
-    fs.writeFileSync(path.join(mapDir, mapName), JSON.stringify(newSourceMap));
-  }
-  fs.writeFileSync(outFile, result.code);
+  return processFile(inFile, outFile, relativePath, outDir, silent, this.options);
 };
