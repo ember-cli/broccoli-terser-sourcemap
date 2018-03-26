@@ -118,8 +118,10 @@ UglifyWriter.prototype.build = function () {
 UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath, outDir) {
   // don't run this in the workerpool if concurrency is disabled (can set JOBS <= 1)
   if (this.async && this.concurrency > 1) {
+    debug('running in workerpool, concurrency=%d', this.concurrency);
     // each of these arguments is a string, which can be sent to the worker process as-is
     return this.pool.exec('processFileParallel', [inFile, outFile, relativePath, outDir, silent, this.options]);
   }
+  debug('not running in workerpool');
   return processFile(inFile, outFile, relativePath, outDir, silent, this.options);
 };
