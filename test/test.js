@@ -127,6 +127,31 @@ let { bar } = Foo.prototype;`,
     });
   });
 
+  describe('concurrency', function() {
+    afterEach(function() {
+      delete process.env.JOBS;
+    });
+
+    it('defaults to CPUs-1 workers', async function() {
+      var testUglify = new uglify(fixturesError, { async: true });
+
+      expect(testUglify.concurrency).toEqual(require('os').cpus().length - 1);
+    });
+
+    it('sets concurrency using the option', async function() {
+      var testUglify = new uglify(fixturesError, { async: true, concurrency: 145 });
+
+      expect(testUglify.concurrency).toEqual(145);
+    });
+
+    it('overrides concurrency with JOBS env variable', async function() {
+      process.env.JOBS = '7';
+      var testUglify = new uglify(fixturesError, { async: true, concurrency: 145 });
+
+      expect(testUglify.concurrency).toEqual(7);
+    });
+  });
+
   afterEach(async function() {
     if (input) {
       await input.dispose();
