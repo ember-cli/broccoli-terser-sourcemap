@@ -1,5 +1,21 @@
 # Changelog
 
+## v2.1.1 (2018-03-27)
+
+#### :bug: Bug Fix
+* [#64](https://github.com/ember-cli/broccoli-uglify-sourcemap/pull/64) JOBS environment variable should override concurrency. ([@mikrostew](https://github.com/mikrostew))
+
+#### Committers: 1
+- Michael Stewart ([mikrostew](https://github.com/mikrostew))
+
+## v2.1.0 (2018-03-27)
+
+#### :rocket: Enhancement
+* [#63](https://github.com/ember-cli/broccoli-uglify-sourcemap/pull/63) Run uglify in parallel, using a workerpool. ([@mikrostew](https://github.com/mikrostew))
+
+#### Committers: 1
+- Michael Stewart ([mikrostew](https://github.com/mikrostew))
+
 ## v2.0.1 (2017-11-16)
 
 #### :bug: Bug Fix
