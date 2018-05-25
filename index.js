@@ -9,7 +9,7 @@ const mkdirp = require('mkdirp');
 const MatcherCollection = require('matcher-collection');
 const debug = require('debug')('broccoli-uglify-sourcemap');
 const queue = require('async-promise-queue');
-const workerpool  = require('workerpool');
+const workerpool = require('workerpool');
 
 const processFile = require('./lib/process-file');
 
@@ -20,9 +20,15 @@ UglifyWriter.prototype.constructor = UglifyWriter;
 
 const silent = process.argv.indexOf('--silent') !== -1;
 
-const worker = queue.async.asyncify((doWork) => doWork());
+const worker = queue.async.asyncify(doWork => doWork());
 
-function UglifyWriter (inputNodes, options) {
+const MatchNothing = {
+  match() {
+    return false;
+  },
+};
+
+function UglifyWriter(inputNodes, options) {
   if (!(this instanceof UglifyWriter)) {
     return new UglifyWriter(inputNodes, options);
   }
@@ -54,20 +60,14 @@ function UglifyWriter (inputNodes, options) {
   }
 }
 
-const MatchNothing = {
-  match: function () {
-    return false;
-  }
-};
-
-UglifyWriter.prototype.build = function () {
+UglifyWriter.prototype.build = function() {
   let writer = this;
 
   // when options.async === true, allow processFile() operations to complete asynchronously
   let pendingWork = [];
 
-  this.inputPaths.forEach(function(inputPath) {
-    walkSync(inputPath).forEach(function(relativePath) {
+  this.inputPaths.forEach(inputPath => {
+    walkSync(inputPath).forEach(relativePath => {
       if (relativePath.slice(-1) === '/') {
         return;
       }
@@ -87,7 +87,7 @@ UglifyWriter.prototype.build = function () {
         }
         return uglifyOperation();
       } else if (relativePath.slice(-4) === '.map') {
-        if (writer.excludes.match(relativePath.slice(0, -4) + '.js')) {
+        if (writer.excludes.match(`${relativePath.slice(0, -4)}.js`)) {
           // ensure .map files for excluded JS paths are also copied forward
           symlinkOrCopy.sync(inFile, outFile);
         }
@@ -104,7 +104,7 @@ UglifyWriter.prototype.build = function () {
       writer.pool.terminate();
       return writer.outputPath;
     })
-    .catch((e) => {
+    .catch(e => {
       // make sure to shut down the workers on error
       writer.pool.terminate();
       throw e;
