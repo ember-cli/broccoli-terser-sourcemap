@@ -1,18 +1,18 @@
 /* global describe, afterEach, it, expect */
 
-var uglify = require('..');
-var fs = require('fs');
-var path = require('path');
-var helpers = require('broccoli-test-helper');
+const uglify = require('..');
+const fs = require('fs');
+const path = require('path');
+const helpers = require('broccoli-test-helper');
 
-var fixtures = path.join(__dirname, 'fixtures');
-var fixturesError = path.join(__dirname, 'fixtures-error');
+const fixtures = path.join(__dirname, 'fixtures');
+const fixturesError = path.join(__dirname, 'fixtures-error');
 
-var createTempDir = helpers.createTempDir;
-var createBuilder = helpers.createBuilder;
+const createTempDir = helpers.createTempDir;
+const createBuilder = helpers.createBuilder;
 
 describe('broccoli-uglify-sourcemap', function() {
-  var input, builder;
+  let input, builder;
 
   beforeEach(async function() {
     input = await createTempDir();
@@ -80,7 +80,7 @@ let { bar } = Foo.prototype;`,
   });
 
   it('shuts down the workerpool', async function() {
-    var testUglify = new uglify(fixtures, { async: true });
+    let testUglify = new uglify(fixtures, { async: true });
     builder = createBuilder(testUglify);
 
     await builder.build();
@@ -93,7 +93,7 @@ let { bar } = Foo.prototype;`,
     it('rejects with BuildError', async function() {
       builder = createBuilder(new uglify(fixturesError, {}));
 
-      var shouldError;
+      let shouldError;
       await builder.build()
         .catch(err => {
           shouldError = err;
@@ -106,7 +106,7 @@ let { bar } = Foo.prototype;`,
     it('rejects with BuildError async', async function() {
       builder = createBuilder(new uglify(fixturesError, { async: true }));
 
-      var shouldError;
+      let shouldError;
       await builder.build()
         .catch(err => {
           shouldError = err;
@@ -117,7 +117,7 @@ let { bar } = Foo.prototype;`,
     });
 
     it('shuts down the workerpool', async function() {
-      var testUglify = new uglify(fixturesError, { async: true });
+      let testUglify = new uglify(fixturesError, { async: true });
       builder = createBuilder(testUglify);
 
       await builder.build().catch(err => {});
@@ -133,20 +133,20 @@ let { bar } = Foo.prototype;`,
     });
 
     it('defaults to CPUs-1 workers', async function() {
-      var testUglify = new uglify(fixturesError, { async: true });
+      let testUglify = new uglify(fixturesError, { async: true });
 
       expect(testUglify.concurrency).toEqual(require('os').cpus().length - 1);
     });
 
     it('sets concurrency using the option', async function() {
-      var testUglify = new uglify(fixturesError, { async: true, concurrency: 145 });
+      let testUglify = new uglify(fixturesError, { async: true, concurrency: 145 });
 
       expect(testUglify.concurrency).toEqual(145);
     });
 
     it('overrides concurrency with JOBS env variable', async function() {
       process.env.JOBS = '7';
-      var testUglify = new uglify(fixturesError, { async: true, concurrency: 145 });
+      let testUglify = new uglify(fixturesError, { async: true, concurrency: 145 });
 
       expect(testUglify.concurrency).toEqual(7);
     });
