@@ -1,6 +1,6 @@
 {
   "name": "broccoli-uglify-sourcemap",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "Broccoli filter to uglify files while preserving their sourcemaps.",
   "homepage": "https://github.com/ember-cli/broccoli-uglify-sourcemap#readme",
   "bugs": {
