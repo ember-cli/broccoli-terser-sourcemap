@@ -1,5 +1,21 @@
 # Changelog
 
+## v2.2.0 (2018-05-28)
+
+#### :rocket: Enhancement
+* [#70](https://github.com/ember-cli/broccoli-uglify-sourcemap/pull/70) Replace unmaintained `uglify-es` with `terser`. ([@Turbo87](https://github.com/Turbo87))
+
+#### :memo: Documentation
+* [#66](https://github.com/ember-cli/broccoli-uglify-sourcemap/pull/66) Update changelog (Closes [#65](https://github.com/ember-cli/broccoli-uglify-sourcemap/issues/65)). ([@mikrostew](https://github.com/mikrostew))
+
+#### :house: Internal
+* [#71](https://github.com/ember-cli/broccoli-uglify-sourcemap/pull/71) Cleanup code and add ESLint checks. ([@Turbo87](https://github.com/Turbo87))
+
+#### Committers: 2
+- Michael Stewart ([mikrostew](https://github.com/mikrostew))
+- Tobias Bieniek ([Turbo87](https://github.com/Turbo87))
+
+
 ## v2.1.1 (2018-03-27)
 
 #### :bug: Bug Fix
@@ -8,13 +24,32 @@
 #### Committers: 1
 - Michael Stewart ([mikrostew](https://github.com/mikrostew))
 
+
 ## v2.1.0 (2018-03-27)
 
 #### :rocket: Enhancement
 * [#63](https://github.com/ember-cli/broccoli-uglify-sourcemap/pull/63) Run uglify in parallel, using a workerpool. ([@mikrostew](https://github.com/mikrostew))
 
-#### Committers: 1
+#### :memo: Documentation
+* [#62](https://github.com/ember-cli/broccoli-uglify-sourcemap/pull/62) Fix a comment typo. ([@ealter](https://github.com/ealter))
+
+#### Committers: 2
+- Eliot Alter ([ealter](https://github.com/ealter))
 - Michael Stewart ([mikrostew](https://github.com/mikrostew))
+
+
+## v2.0.2 (2018-01-11)
+
+#### :bug: Bug Fix
+* [#59](https://github.com/ember-cli/broccoli-uglify-sourcemap/pull/59) Do not try to access `length` of minified code if minification failed. ([@kmoe](https://github.com/kmoe))
+
+#### :memo: Documentation
+* [#56](https://github.com/ember-cli/broccoli-uglify-sourcemap/pull/56) Fix CHANGELOG. ([@Turbo87](https://github.com/Turbo87))
+
+#### Committers: 2
+- Tobias Bieniek ([Turbo87](https://github.com/Turbo87))
+- [kmoe](https://github.com/kmoe)
+
 
 ## v2.0.1 (2017-11-16)
 
@@ -23,6 +58,7 @@
 
 #### Committers: 1
 - Tobias Bieniek ([Turbo87](https://github.com/Turbo87))
+
 
 ## v2.0.0 (2017-10-03)
 
