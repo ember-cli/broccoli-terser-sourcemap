@@ -3492,8 +3492,8 @@ symbol-tree@^3.2.1:
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.2.tgz#ae27db38f660a7ae2e1c3b7d1bc290819b8519e6"
 
 symlink-or-copy@^1.0.1, symlink-or-copy@^1.1.8:
-  version "1.1.8"
-  resolved "https://registry.npmjs.org/symlink-or-copy/-/symlink-or-copy-1.1.8.tgz#cabe61e0010c1c023c173b25ee5108b37f4b4aa3"
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/symlink-or-copy/-/symlink-or-copy-1.2.0.tgz#5d49108e2ab824a34069b68974486c290020b393"
 
 table@4.0.2:
   version "4.0.2"
