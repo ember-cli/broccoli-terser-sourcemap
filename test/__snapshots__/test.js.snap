@@ -56,7 +56,7 @@ exports[`broccoli-uglify-sourcemap can handle ES6 code 1`] = `
 Object {
   "es6.js": "class Foo{bar(){console.log(this.baz)}}let{bar:bar}=Foo.prototype;
 //# sourceMappingURL=es6.map",
-  "es6.map": "{\\"version\\":3,\\"sources\\":[\\"0\\"],\\"names\\":[\\"Foo\\",\\"[object Object]\\",\\"console\\",\\"log\\",\\"this\\",\\"baz\\",\\"bar\\",\\"prototype\\"],\\"mappings\\":\\"MAAMA,IACJC,MACEC,QAAQC,IAAIC,KAAKC,MAIrB,IAAIC,IAAEA,KAAQN,IAAIO\\",\\"file\\":\\"es6.js\\"}",
+  "es6.map": "{\\"version\\":3,\\"sources\\":[\\"0\\"],\\"names\\":[\\"Foo\\",\\"[object Object]\\",\\"console\\",\\"log\\",\\"this\\",\\"baz\\",\\"bar\\",\\"prototype\\"],\\"mappings\\":\\"AAAA,MAAMA,IACJC,MACEC,QAAQC,IAAIC,KAAKC,MAIrB,IAAIC,IAAEA,KAAQN,IAAIO\\",\\"file\\":\\"es6.js\\"}",
 }
 `;
 
