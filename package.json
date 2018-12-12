@@ -34,7 +34,7 @@
     "symlink-or-copy": "^1.0.1",
     "terser": "^3.10.8",
     "walk-sync": "^1.0.0",
-    "workerpool": "^2.3.0"
+    "workerpool": "^3.0.0"
   },
   "devDependencies": {
     "babel-jest": "^23.6.0",
