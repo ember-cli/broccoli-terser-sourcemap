@@ -45,6 +45,9 @@
     "jest-runner-eslint": "^0.6.0",
     "lerna-changelog": "^0.7.0"
   },
+  "engines": {
+    "node": "6.* || 8.* || >= 10.*"
+  },
   "changelog": {
     "repo": "ember-cli/broccoli-uglify-sourcemap",
     "labels": {
