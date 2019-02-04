@@ -33,7 +33,7 @@
     "source-map-url": "^0.4.0",
     "symlink-or-copy": "^1.0.1",
     "terser": "^3.10.8",
-    "walk-sync": "^1.0.0",
+    "walk-sync": "^1.1.2",
     "workerpool": "^3.0.0"
   },
   "devDependencies": {
