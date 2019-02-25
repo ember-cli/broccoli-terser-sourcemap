@@ -48,7 +48,10 @@ function UglifyWriter(inputNodes, options) {
   this.concurrency = Number(process.env.JOBS) || this.options.concurrency || Math.max(require('os').cpus().length - 1, 1);
 
   // create a worker pool using an external worker script
-  this.pool = workerpool.pool(path.join(__dirname, 'lib', 'worker.js'), { maxWorkers: this.concurrency });
+  this.pool = workerpool.pool(path.join(__dirname, 'lib', 'worker.js'), {
+    maxWorkers: this.concurrency,
+    nodeWorker: 'auto',
+  });
 
   this.inputNodes = inputNodes;
 

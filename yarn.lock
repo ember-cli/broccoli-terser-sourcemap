@@ -5210,10 +5210,10 @@ wordwrap@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-1.0.0.tgz#27584810891456a4171c8d0226441ade90cbcaeb"
 
-workerpool@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/workerpool/-/workerpool-3.1.0.tgz#59023001aea1f10660e26fad83e219b93473c9d8"
-  integrity sha512-oMe8DTO0x3X8DqSJlzNDru0QGqAg4VfALMaBumBK7HBqkUGONvPq+JvpHvSUFAJ5gLWzXxClMSYXM5CAV0d2+Q==
+workerpool@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/workerpool/-/workerpool-3.1.1.tgz#9decea76b73c2f91de1b5bec1019f8a474b3a620"
+  integrity sha512-VzYD/kM3Gk9L7GR0LtrcyiZA8+h8Fse503aq4WkYwRBXreHTixVEcqKLjiFS6gM0fyaEt0pjSLf1ANGQXM27cg==
   dependencies:
     object-assign "4.1.1"
 
