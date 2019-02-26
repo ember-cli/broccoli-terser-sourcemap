@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.0.0
+
+* drop node 4 support
+* use WorkerThreads if availabble
+* upgrade depednencies
+
 ## v2.2.0 (2018-05-28)
 
 #### :rocket: Enhancement
