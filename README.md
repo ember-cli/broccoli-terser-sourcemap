@@ -28,6 +28,9 @@ var uglified = uglify(input, {
     //...
   },
 
+  publicUrl: 'https://myamazingapp.com/', // value to be prepended to sourceMappingURL, defaults to ''
+  hiddenSourceMap: false, // skips adding the reference to sourcemap in the minified JS, defaults to false
+
   async: true,   // run uglify in parallel, defaults to false
   concurrency: 3 // number of parallel workers, defaults to number of CPUs - 1
 });
