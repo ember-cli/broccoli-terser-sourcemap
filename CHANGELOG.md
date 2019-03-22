@@ -1,10 +1,31 @@
 # Changelog
 
-## v3.0.0
+## v3.1.0 (2019-03-22)
 
-* drop node 4 support
-* use WorkerThreads if availabble
-* upgrade depednencies
+#### :rocket: Enhancement
+* [#126](https://github.com/ember-cli/broccoli-uglify-sourcemap/pull/126) Support publicUrl and hiddenSourceMap options ([@astronomersiva](https://github.com/astronomersiva))
+
+#### Committers: 1
+- Sivasubramanyam A ([@astronomersiva](https://github.com/astronomersiva))
+
+
+## v3.0.0 (2019-02-25)
+
+#### :boom: Breaking Change
+* [#112](https://github.com/ember-cli/broccoli-uglify-sourcemap/pull/112) Drop Node 4 support ([@Turbo87](https://github.com/Turbo87))
+
+#### :rocket: Enhancement
+* [#128](https://github.com/ember-cli/broccoli-uglify-sourcemap/pull/128) If available use WorkerThreads ([@stefanpenner](https://github.com/stefanpenner))
+* [#93](https://github.com/ember-cli/broccoli-uglify-sourcemap/pull/93) Update `terser` to v3.10.8 ([@msz](https://github.com/msz))
+
+#### :house: Internal
+* [#106](https://github.com/ember-cli/broccoli-uglify-sourcemap/pull/106) TravisCI: Remove deprecated `sudo: false` option ([@Turbo87](https://github.com/Turbo87))
+
+#### Committers: 3
+- Michał Szewczak ([@msz](https://github.com/msz))
+- Stefan Penner ([@stefanpenner](https://github.com/stefanpenner))
+- Tobias Bieniek ([@Turbo87](https://github.com/Turbo87))
+
 
 ## v2.2.0 (2018-05-28)
 
