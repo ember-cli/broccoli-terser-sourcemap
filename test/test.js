@@ -61,6 +61,22 @@ let { bar } = Foo.prototype;`,
     expect(builder.read()).toMatchSnapshot();
   });
 
+  it('supports hidden sourcemaps', async function() {
+    builder = createBuilder(new Uglify(fixtures, { hiddenSourceMap: true }));
+
+    await builder.build();
+
+    expect(builder.read()).toMatchSnapshot();
+  });
+
+  it('supports public URL for sourcemaps', async function() {
+    builder = createBuilder(new Uglify(fixtures, { publicUrl: 'https://example.com' }));
+
+    await builder.build();
+
+    expect(builder.read()).toMatchSnapshot();
+  });
+
   it('can exclude files from getting uglified', async function() {
     builder = createBuilder(new Uglify(fixtures, {
       exclude: ['inside/with-up*'],
