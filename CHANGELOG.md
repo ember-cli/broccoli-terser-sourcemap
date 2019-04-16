@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.1.1 (2019-04-16)
+
+* Fix sources: ["0"], output the correct source (@xg-wang)
+
 ## v3.1.0 (2019-03-22)
 
 #### :rocket: Enhancement
