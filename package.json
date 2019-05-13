@@ -24,7 +24,7 @@
     "test:watch": "jest --watchAll"
   },
   "dependencies": {
-    "async-promise-queue": "^1.0.4",
+    "async-promise-queue": "^1.0.5",
     "broccoli-plugin": "^1.2.1",
     "debug": "^4.1.0",
     "lodash.defaultsdeep": "^4.6.0",
