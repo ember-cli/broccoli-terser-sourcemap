@@ -169,6 +169,16 @@ let { bar } = Foo.prototype;`,
     });
   });
 
+  describe('mjs', function() {
+    it('can uglify .mjs files', async function() {
+      builder = createBuilder(new Uglify(fixtures));
+
+      await builder.build();
+
+      expect(builder.read()).toMatchSnapshot();
+    });
+  });
+
   afterEach(async function() {
     if (input) {
       await input.dispose();

@@ -79,7 +79,7 @@ UglifyWriter.prototype.build = function() {
 
       mkdirp.sync(path.dirname(outFile));
 
-      if (relativePath.slice(-3) === '.js' && !writer.excludes.match(relativePath)) {
+      if (this._isJSExt(relativePath) && !writer.excludes.match(relativePath)) {
         // wrap this in a function so it doesn't actually run yet, and can be throttled
         let uglifyOperation = function() {
           return writer.processFile(inFile, outFile, relativePath, writer.outputPath);
@@ -90,7 +90,7 @@ UglifyWriter.prototype.build = function() {
         }
         return uglifyOperation();
       } else if (relativePath.slice(-4) === '.map') {
-        if (writer.excludes.match(`${relativePath.slice(0, -4)}.js`)) {
+        if (writer.excludes.match(`${relativePath.slice(0, -4)}.{js,mjs}`)) {
           // ensure .map files for excluded JS paths are also copied forward
           symlinkOrCopy.sync(inFile, outFile);
         }
@@ -112,6 +112,10 @@ UglifyWriter.prototype.build = function() {
       writer.pool.terminate();
       throw e;
     });
+};
+
+UglifyWriter.prototype._isJSExt = function(relativePath) {
+  return relativePath.slice(-3) === '.js' || relativePath.slice(-4) === '.mjs';
 };
 
 UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath, outDir) {

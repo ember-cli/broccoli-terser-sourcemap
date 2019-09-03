@@ -5,6 +5,9 @@ Object {
   "inside": Object {
     "with-upstream-sourcemap.js": "function meaningOfLife(){throw new Error(42)}function boom(){throw new Error(\\"boom\\")}function somethingElse(){throw new Error(\\"somethign else\\")}function fourth(){throw new Error(\\"fourth\\")}function third(){throw new Error(\\"oh no\\")}",
   },
+  "mjs": Object {
+    "index.mjs": "const MJS_I_GUESS=\\"ok\\";export default\\"ok\\";",
+  },
   "multi": Object {
     "with-multi-sourcemap.js": "function meaningOfLife(){throw new Error(42)}function boom(){throw new Error(\\"boom\\")}function somethingElse(){throw new Error(\\"somethign else\\")}function fourth(){throw new Error(\\"fourth\\")}function third(){throw new Error(\\"oh no\\")}",
   },
@@ -43,6 +46,11 @@ function third(){
 //# sourceMappingURL=with-upstream-sourcemap.map",
     "with-upstream-sourcemap.map": "{\\"version\\":3,\\"sources\\":[\\"/inner/first.js\\",\\"/inner/second.js\\",\\"/other/fourth.js\\",\\"/other/third.js\\"],\\"sourcesContent\\":[\\"function meaningOfLife() {\\\\n  var thisIsALongLocal = 42;\\\\n  throw new Error(thisIsALongLocal);\\\\n}\\\\n\\\\nfunction boom() {\\\\n  throw new Error('boom');\\\\n}\\\\n\\",\\"function somethingElse() {\\\\n  throw new Error(\\\\\\"somethign else\\\\\\");\\\\n}\\\\n\\",\\"\\\\n// Hello world\\\\n\\\\nfunction fourth(){\\\\n  throw new Error('fourth');\\\\n}\\\\n\\",\\"function third(){\\\\n  throw new Error(\\\\\\"oh no\\\\\\");\\\\n}\\\\n\\"],\\"names\\":[],\\"mappings\\":\\";AAAA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;ACPA;AACA;AACA;ACFA;AACA;AACA;AACA;AACA;AACA;ACLA;AACA;AACA;\\",\\"file\\":\\"with-upstream-sourcemap.js\\"}",
   },
+  "mjs": Object {
+    "index.mjs": "const MJS_I_GUESS=\\"ok\\";export default\\"ok\\";
+//# sourceMappingURL=index.mjs.map",
+    "index.mjs.map": "{\\"version\\":3,\\"sources\\":[\\"mjs/index.mjs\\"],\\"names\\":[\\"MJS_I_GUESS\\"],\\"mappings\\":\\"AAAA,MAAMA,YAAc,mBAAA\\",\\"file\\":\\"index.mjs\\"}",
+  },
   "multi": Object {
     "with-multi-sourcemap.js": "function meaningOfLife(){throw new Error(42)}function boom(){throw new Error(\\"boom\\")}function somethingElse(){throw new Error(\\"somethign else\\")}function fourth(){throw new Error(\\"fourth\\")}function third(){throw new Error(\\"oh no\\")}
 //# sourceMappingURL=with-multi-sourcemap.map",
@@ -75,6 +83,11 @@ Object {
 //# sourceMappingURL=with-upstream-sourcemap.map",
     "with-upstream-sourcemap.map": "{\\"version\\":3,\\"sources\\":[\\"/inner/first.js\\",\\"/inner/second.js\\",\\"/other/fourth.js\\",\\"/other/third.js\\"],\\"names\\":[\\"meaningOfLife\\",\\"Error\\",\\"boom\\",\\"somethingElse\\",\\"fourth\\",\\"third\\"],\\"mappings\\":\\"AAAA,SAAAA,gBAEA,MAAA,IAAAC,MADA,IAIA,SAAAC,OACA,MAAA,IAAAD,MAAA,QCNA,SAAAE,gBACA,MAAA,IAAAF,MAAA,kBCEA,SAAAG,SACA,MAAA,IAAAH,MAAA,UCJA,SAAAI,QACA,MAAA,IAAAJ,MAAA\\",\\"file\\":\\"with-upstream-sourcemap.js\\",\\"sourcesContent\\":[\\"function meaningOfLife() {\\\\n  var thisIsALongLocal = 42;\\\\n  throw new Error(thisIsALongLocal);\\\\n}\\\\n\\\\nfunction boom() {\\\\n  throw new Error('boom');\\\\n}\\\\n\\",\\"function somethingElse() {\\\\n  throw new Error(\\\\\\"somethign else\\\\\\");\\\\n}\\\\n\\",\\"\\\\n// Hello world\\\\n\\\\nfunction fourth(){\\\\n  throw new Error('fourth');\\\\n}\\\\n\\",\\"function third(){\\\\n  throw new Error(\\\\\\"oh no\\\\\\");\\\\n}\\\\n\\"]}",
   },
+  "mjs": Object {
+    "index.mjs": "const MJS_I_GUESS=\\"ok\\";export default\\"ok\\";
+//# sourceMappingURL=index.mjs.map",
+    "index.mjs.map": "{\\"version\\":3,\\"sources\\":[\\"mjs/index.mjs\\"],\\"names\\":[\\"MJS_I_GUESS\\"],\\"mappings\\":\\"AAAA,MAAMA,YAAc,mBAAA\\",\\"file\\":\\"index.mjs\\"}",
+  },
   "multi": Object {
     "with-multi-sourcemap.js": "function meaningOfLife(){throw new Error(42)}function boom(){throw new Error(\\"boom\\")}function somethingElse(){throw new Error(\\"somethign else\\")}function fourth(){throw new Error(\\"fourth\\")}function third(){throw new Error(\\"oh no\\")}
 //# sourceMappingURL=with-multi-sourcemap.map",
@@ -98,6 +111,40 @@ Object {
     "with-upstream-sourcemap.js": "function meaningOfLife(){throw new Error(42)}function boom(){throw new Error(\\"boom\\")}function somethingElse(){throw new Error(\\"somethign else\\")}function fourth(){throw new Error(\\"fourth\\")}function third(){throw new Error(\\"oh no\\")}
 //# sourceMappingURL=with-upstream-sourcemap.map",
     "with-upstream-sourcemap.map": "{\\"version\\":3,\\"sources\\":[\\"/inner/first.js\\",\\"/inner/second.js\\",\\"/other/fourth.js\\",\\"/other/third.js\\"],\\"names\\":[\\"meaningOfLife\\",\\"Error\\",\\"boom\\",\\"somethingElse\\",\\"fourth\\",\\"third\\"],\\"mappings\\":\\"AAAA,SAAAA,gBAEA,MAAA,IAAAC,MADA,IAIA,SAAAC,OACA,MAAA,IAAAD,MAAA,QCNA,SAAAE,gBACA,MAAA,IAAAF,MAAA,kBCEA,SAAAG,SACA,MAAA,IAAAH,MAAA,UCJA,SAAAI,QACA,MAAA,IAAAJ,MAAA\\",\\"file\\":\\"with-upstream-sourcemap.js\\",\\"sourcesContent\\":[\\"function meaningOfLife() {\\\\n  var thisIsALongLocal = 42;\\\\n  throw new Error(thisIsALongLocal);\\\\n}\\\\n\\\\nfunction boom() {\\\\n  throw new Error('boom');\\\\n}\\\\n\\",\\"function somethingElse() {\\\\n  throw new Error(\\\\\\"somethign else\\\\\\");\\\\n}\\\\n\\",\\"\\\\n// Hello world\\\\n\\\\nfunction fourth(){\\\\n  throw new Error('fourth');\\\\n}\\\\n\\",\\"function third(){\\\\n  throw new Error(\\\\\\"oh no\\\\\\");\\\\n}\\\\n\\"]}",
+  },
+  "mjs": Object {
+    "index.mjs": "const MJS_I_GUESS=\\"ok\\";export default\\"ok\\";
+//# sourceMappingURL=index.mjs.map",
+    "index.mjs.map": "{\\"version\\":3,\\"sources\\":[\\"mjs/index.mjs\\"],\\"names\\":[\\"MJS_I_GUESS\\"],\\"mappings\\":\\"AAAA,MAAMA,YAAc,mBAAA\\",\\"file\\":\\"index.mjs\\"}",
+  },
+  "multi": Object {
+    "with-multi-sourcemap.js": "function meaningOfLife(){throw new Error(42)}function boom(){throw new Error(\\"boom\\")}function somethingElse(){throw new Error(\\"somethign else\\")}function fourth(){throw new Error(\\"fourth\\")}function third(){throw new Error(\\"oh no\\")}
+//# sourceMappingURL=with-multi-sourcemap.map",
+    "with-multi-sourcemap.map": "{\\"version\\":3,\\"sources\\":[\\"/inner/first.js\\",\\"/inner/second.js\\",\\"/other/fourth.js\\",\\"/other/third.js\\"],\\"names\\":[\\"meaningOfLife\\",\\"Error\\",\\"boom\\",\\"somethingElse\\",\\"fourth\\",\\"third\\"],\\"mappings\\":\\"AAAA,SAAAA,gBAEA,MAAA,IAAAC,MADA,IAIA,SAAAC,OACA,MAAA,IAAAD,MAAA,QCNA,SAAAE,gBACA,MAAA,IAAAF,MAAA,kBCEA,SAAAG,SACA,MAAA,IAAAH,MAAA,UCJA,SAAAI,QACA,MAAA,IAAAJ,MAAA\\",\\"file\\":\\"with-multi-sourcemap.js\\",\\"sourcesContent\\":[\\"function meaningOfLife() {\\\\n  var thisIsALongLocal = 42;\\\\n  throw new Error(thisIsALongLocal);\\\\n}\\\\n\\\\nfunction boom() {\\\\n  throw new Error('boom');\\\\n}\\\\n\\",\\"function somethingElse() {\\\\n  throw new Error(\\\\\\"somethign else\\\\\\");\\\\n}\\\\n\\",\\"\\\\n// Hello world\\\\n\\\\nfunction fourth(){\\\\n  throw new Error('fourth');\\\\n}\\\\n\\",\\"function third(){\\\\n  throw new Error(\\\\\\"oh no\\\\\\");\\\\n}\\\\n\\"]}",
+  },
+  "no-upstream-sourcemap.js": "function meaningOfLife(){throw new Error(42)}function boom(){throw new Error(\\"boom\\")}function somethingElse(){throw new Error(\\"somethign else\\")}function fourth(){throw new Error(\\"fourth\\")}function third(){throw new Error(\\"oh no\\")}
+//# sourceMappingURL=no-upstream-sourcemap.map",
+  "no-upstream-sourcemap.map": "{\\"version\\":3,\\"sources\\":[\\"no-upstream-sourcemap.js\\"],\\"names\\":[\\"meaningOfLife\\",\\"Error\\",\\"boom\\",\\"somethingElse\\",\\"fourth\\",\\"third\\"],\\"mappings\\":\\"AACA,SAASA,gBAEP,MAAM,IAAIC,MADa,IAIzB,SAASC,OACP,MAAM,IAAID,MAAM,QAGlB,SAASE,gBACP,MAAM,IAAIF,MAAM,kBAMlB,SAASG,SACP,MAAM,IAAIH,MAAM,UAGlB,SAASI,QACP,MAAM,IAAIJ,MAAM\\",\\"file\\":\\"no-upstream-sourcemap.js\\"}",
+  "something.css": "#id {
+    background: white;
+}",
+  "with-broken-sourcemap.js": "function meaningOfLife(){throw new Error(42)}
+//# sourceMappingURL=with-broken-sourcemap.map",
+  "with-broken-sourcemap.map": "{\\"version\\":3,\\"sources\\":[\\"with-broken-sourcemap.js\\"],\\"names\\":[\\"meaningOfLife\\",\\"Error\\"],\\"mappings\\":\\"AAAA,SAASA,gBAEP,MAAM,IAAIC,MADa\\",\\"file\\":\\"with-broken-sourcemap.js\\"}",
+}
+`;
+
+exports[`broccoli-uglify-sourcemap mjs can uglify .mjs files 1`] = `
+Object {
+  "inside": Object {
+    "with-upstream-sourcemap.js": "function meaningOfLife(){throw new Error(42)}function boom(){throw new Error(\\"boom\\")}function somethingElse(){throw new Error(\\"somethign else\\")}function fourth(){throw new Error(\\"fourth\\")}function third(){throw new Error(\\"oh no\\")}
+//# sourceMappingURL=with-upstream-sourcemap.map",
+    "with-upstream-sourcemap.map": "{\\"version\\":3,\\"sources\\":[\\"/inner/first.js\\",\\"/inner/second.js\\",\\"/other/fourth.js\\",\\"/other/third.js\\"],\\"names\\":[\\"meaningOfLife\\",\\"Error\\",\\"boom\\",\\"somethingElse\\",\\"fourth\\",\\"third\\"],\\"mappings\\":\\"AAAA,SAAAA,gBAEA,MAAA,IAAAC,MADA,IAIA,SAAAC,OACA,MAAA,IAAAD,MAAA,QCNA,SAAAE,gBACA,MAAA,IAAAF,MAAA,kBCEA,SAAAG,SACA,MAAA,IAAAH,MAAA,UCJA,SAAAI,QACA,MAAA,IAAAJ,MAAA\\",\\"file\\":\\"with-upstream-sourcemap.js\\",\\"sourcesContent\\":[\\"function meaningOfLife() {\\\\n  var thisIsALongLocal = 42;\\\\n  throw new Error(thisIsALongLocal);\\\\n}\\\\n\\\\nfunction boom() {\\\\n  throw new Error('boom');\\\\n}\\\\n\\",\\"function somethingElse() {\\\\n  throw new Error(\\\\\\"somethign else\\\\\\");\\\\n}\\\\n\\",\\"\\\\n// Hello world\\\\n\\\\nfunction fourth(){\\\\n  throw new Error('fourth');\\\\n}\\\\n\\",\\"function third(){\\\\n  throw new Error(\\\\\\"oh no\\\\\\");\\\\n}\\\\n\\"]}",
+  },
+  "mjs": Object {
+    "index.mjs": "const MJS_I_GUESS=\\"ok\\";export default\\"ok\\";
+//# sourceMappingURL=index.mjs.map",
+    "index.mjs.map": "{\\"version\\":3,\\"sources\\":[\\"mjs/index.mjs\\"],\\"names\\":[\\"MJS_I_GUESS\\"],\\"mappings\\":\\"AAAA,MAAMA,YAAc,mBAAA\\",\\"file\\":\\"index.mjs\\"}",
   },
   "multi": Object {
     "with-multi-sourcemap.js": "function meaningOfLife(){throw new Error(42)}function boom(){throw new Error(\\"boom\\")}function somethingElse(){throw new Error(\\"somethign else\\")}function fourth(){throw new Error(\\"fourth\\")}function third(){throw new Error(\\"oh no\\")}
@@ -129,6 +176,11 @@ Object {
 //# sourceMappingURL=with-upstream-sourcemap.map",
     "with-upstream-sourcemap.map": "{\\"version\\":3,\\"sources\\":[\\"/inner/first.js\\",\\"/inner/second.js\\",\\"/other/fourth.js\\",\\"/other/third.js\\"],\\"names\\":[\\"meaningOfLife\\",\\"Error\\",\\"boom\\",\\"somethingElse\\",\\"fourth\\",\\"third\\"],\\"mappings\\":\\"AAAA,SAAAA,gBAEA,MAAA,IAAAC,MADA,IAIA,SAAAC,OACA,MAAA,IAAAD,MAAA,QCNA,SAAAE,gBACA,MAAA,IAAAF,MAAA,kBCEA,SAAAG,SACA,MAAA,IAAAH,MAAA,UCJA,SAAAI,QACA,MAAA,IAAAJ,MAAA\\",\\"file\\":\\"with-upstream-sourcemap.js\\",\\"sourcesContent\\":[\\"function meaningOfLife() {\\\\n  var thisIsALongLocal = 42;\\\\n  throw new Error(thisIsALongLocal);\\\\n}\\\\n\\\\nfunction boom() {\\\\n  throw new Error('boom');\\\\n}\\\\n\\",\\"function somethingElse() {\\\\n  throw new Error(\\\\\\"somethign else\\\\\\");\\\\n}\\\\n\\",\\"\\\\n// Hello world\\\\n\\\\nfunction fourth(){\\\\n  throw new Error('fourth');\\\\n}\\\\n\\",\\"function third(){\\\\n  throw new Error(\\\\\\"oh no\\\\\\");\\\\n}\\\\n\\"]}",
   },
+  "mjs": Object {
+    "index.mjs": "const MJS_I_GUESS=\\"ok\\";export default\\"ok\\";
+//# sourceMappingURL=index.mjs.map",
+    "index.mjs.map": "{\\"version\\":3,\\"sources\\":[\\"mjs/index.mjs\\"],\\"names\\":[\\"MJS_I_GUESS\\"],\\"mappings\\":\\"AAAA,MAAMA,YAAc,mBAAA\\",\\"file\\":\\"index.mjs\\"}",
+  },
   "multi": Object {
     "with-multi-sourcemap.js": "function meaningOfLife(){throw new Error(42)}function boom(){throw new Error(\\"boom\\")}function somethingElse(){throw new Error(\\"somethign else\\")}function fourth(){throw new Error(\\"fourth\\")}function third(){throw new Error(\\"oh no\\")}
 //# sourceMappingURL=with-multi-sourcemap.map",
@@ -153,10 +205,15 @@ Object {
 //# sourceMappingURL=/maps/with-upstream-sourcemap.map",
   },
   "maps": Object {
+    "index.mjs.map": "{\\"version\\":3,\\"sources\\":[\\"mjs/index.mjs\\"],\\"names\\":[\\"MJS_I_GUESS\\"],\\"mappings\\":\\"AAAA,MAAMA,YAAc,mBAAA\\",\\"file\\":\\"index.mjs\\"}",
     "no-upstream-sourcemap.map": "{\\"version\\":3,\\"sources\\":[\\"no-upstream-sourcemap.js\\"],\\"names\\":[\\"meaningOfLife\\",\\"Error\\",\\"boom\\",\\"somethingElse\\",\\"fourth\\",\\"third\\"],\\"mappings\\":\\"AACA,SAASA,gBAEP,MAAM,IAAIC,MADa,IAIzB,SAASC,OACP,MAAM,IAAID,MAAM,QAGlB,SAASE,gBACP,MAAM,IAAIF,MAAM,kBAMlB,SAASG,SACP,MAAM,IAAIH,MAAM,UAGlB,SAASI,QACP,MAAM,IAAIJ,MAAM\\",\\"file\\":\\"no-upstream-sourcemap.js\\"}",
     "with-broken-sourcemap.map": "{\\"version\\":3,\\"sources\\":[\\"with-broken-sourcemap.js\\"],\\"names\\":[\\"meaningOfLife\\",\\"Error\\"],\\"mappings\\":\\"AAAA,SAASA,gBAEP,MAAM,IAAIC,MADa\\",\\"file\\":\\"with-broken-sourcemap.js\\"}",
     "with-multi-sourcemap.map": "{\\"version\\":3,\\"sources\\":[\\"/inner/first.js\\",\\"/inner/second.js\\",\\"/other/fourth.js\\",\\"/other/third.js\\"],\\"names\\":[\\"meaningOfLife\\",\\"Error\\",\\"boom\\",\\"somethingElse\\",\\"fourth\\",\\"third\\"],\\"mappings\\":\\"AAAA,SAAAA,gBAEA,MAAA,IAAAC,MADA,IAIA,SAAAC,OACA,MAAA,IAAAD,MAAA,QCNA,SAAAE,gBACA,MAAA,IAAAF,MAAA,kBCEA,SAAAG,SACA,MAAA,IAAAH,MAAA,UCJA,SAAAI,QACA,MAAA,IAAAJ,MAAA\\",\\"file\\":\\"with-multi-sourcemap.js\\",\\"sourcesContent\\":[\\"function meaningOfLife() {\\\\n  var thisIsALongLocal = 42;\\\\n  throw new Error(thisIsALongLocal);\\\\n}\\\\n\\\\nfunction boom() {\\\\n  throw new Error('boom');\\\\n}\\\\n\\",\\"function somethingElse() {\\\\n  throw new Error(\\\\\\"somethign else\\\\\\");\\\\n}\\\\n\\",\\"\\\\n// Hello world\\\\n\\\\nfunction fourth(){\\\\n  throw new Error('fourth');\\\\n}\\\\n\\",\\"function third(){\\\\n  throw new Error(\\\\\\"oh no\\\\\\");\\\\n}\\\\n\\"]}",
     "with-upstream-sourcemap.map": "{\\"version\\":3,\\"sources\\":[\\"/inner/first.js\\",\\"/inner/second.js\\",\\"/other/fourth.js\\",\\"/other/third.js\\"],\\"names\\":[\\"meaningOfLife\\",\\"Error\\",\\"boom\\",\\"somethingElse\\",\\"fourth\\",\\"third\\"],\\"mappings\\":\\"AAAA,SAAAA,gBAEA,MAAA,IAAAC,MADA,IAIA,SAAAC,OACA,MAAA,IAAAD,MAAA,QCNA,SAAAE,gBACA,MAAA,IAAAF,MAAA,kBCEA,SAAAG,SACA,MAAA,IAAAH,MAAA,UCJA,SAAAI,QACA,MAAA,IAAAJ,MAAA\\",\\"file\\":\\"with-upstream-sourcemap.js\\",\\"sourcesContent\\":[\\"function meaningOfLife() {\\\\n  var thisIsALongLocal = 42;\\\\n  throw new Error(thisIsALongLocal);\\\\n}\\\\n\\\\nfunction boom() {\\\\n  throw new Error('boom');\\\\n}\\\\n\\",\\"function somethingElse() {\\\\n  throw new Error(\\\\\\"somethign else\\\\\\");\\\\n}\\\\n\\",\\"\\\\n// Hello world\\\\n\\\\nfunction fourth(){\\\\n  throw new Error('fourth');\\\\n}\\\\n\\",\\"function third(){\\\\n  throw new Error(\\\\\\"oh no\\\\\\");\\\\n}\\\\n\\"]}",
+  },
+  "mjs": Object {
+    "index.mjs": "const MJS_I_GUESS=\\"ok\\";export default\\"ok\\";
+//# sourceMappingURL=/maps/index.mjs.map",
   },
   "multi": Object {
     "with-multi-sourcemap.js": "function meaningOfLife(){throw new Error(42)}function boom(){throw new Error(\\"boom\\")}function somethingElse(){throw new Error(\\"somethign else\\")}function fourth(){throw new Error(\\"fourth\\")}function third(){throw new Error(\\"oh no\\")}
@@ -178,6 +235,10 @@ Object {
     "with-upstream-sourcemap.js": "function meaningOfLife(){throw new Error(42)}function boom(){throw new Error(\\"boom\\")}function somethingElse(){throw new Error(\\"somethign else\\")}function fourth(){throw new Error(\\"fourth\\")}function third(){throw new Error(\\"oh no\\")}",
     "with-upstream-sourcemap.map": "{\\"version\\":3,\\"sources\\":[\\"/inner/first.js\\",\\"/inner/second.js\\",\\"/other/fourth.js\\",\\"/other/third.js\\"],\\"names\\":[\\"meaningOfLife\\",\\"Error\\",\\"boom\\",\\"somethingElse\\",\\"fourth\\",\\"third\\"],\\"mappings\\":\\"AAAA,SAAAA,gBAEA,MAAA,IAAAC,MADA,IAIA,SAAAC,OACA,MAAA,IAAAD,MAAA,QCNA,SAAAE,gBACA,MAAA,IAAAF,MAAA,kBCEA,SAAAG,SACA,MAAA,IAAAH,MAAA,UCJA,SAAAI,QACA,MAAA,IAAAJ,MAAA\\",\\"file\\":\\"with-upstream-sourcemap.js\\",\\"sourcesContent\\":[\\"function meaningOfLife() {\\\\n  var thisIsALongLocal = 42;\\\\n  throw new Error(thisIsALongLocal);\\\\n}\\\\n\\\\nfunction boom() {\\\\n  throw new Error('boom');\\\\n}\\\\n\\",\\"function somethingElse() {\\\\n  throw new Error(\\\\\\"somethign else\\\\\\");\\\\n}\\\\n\\",\\"\\\\n// Hello world\\\\n\\\\nfunction fourth(){\\\\n  throw new Error('fourth');\\\\n}\\\\n\\",\\"function third(){\\\\n  throw new Error(\\\\\\"oh no\\\\\\");\\\\n}\\\\n\\"]}",
   },
+  "mjs": Object {
+    "index.mjs": "const MJS_I_GUESS=\\"ok\\";export default\\"ok\\";",
+    "index.mjs.map": "{\\"version\\":3,\\"sources\\":[\\"mjs/index.mjs\\"],\\"names\\":[\\"MJS_I_GUESS\\"],\\"mappings\\":\\"AAAA,MAAMA,YAAc,mBAAA\\",\\"file\\":\\"index.mjs\\"}",
+  },
   "multi": Object {
     "with-multi-sourcemap.js": "function meaningOfLife(){throw new Error(42)}function boom(){throw new Error(\\"boom\\")}function somethingElse(){throw new Error(\\"somethign else\\")}function fourth(){throw new Error(\\"fourth\\")}function third(){throw new Error(\\"oh no\\")}",
     "with-multi-sourcemap.map": "{\\"version\\":3,\\"sources\\":[\\"/inner/first.js\\",\\"/inner/second.js\\",\\"/other/fourth.js\\",\\"/other/third.js\\"],\\"names\\":[\\"meaningOfLife\\",\\"Error\\",\\"boom\\",\\"somethingElse\\",\\"fourth\\",\\"third\\"],\\"mappings\\":\\"AAAA,SAAAA,gBAEA,MAAA,IAAAC,MADA,IAIA,SAAAC,OACA,MAAA,IAAAD,MAAA,QCNA,SAAAE,gBACA,MAAA,IAAAF,MAAA,kBCEA,SAAAG,SACA,MAAA,IAAAH,MAAA,UCJA,SAAAI,QACA,MAAA,IAAAJ,MAAA\\",\\"file\\":\\"with-multi-sourcemap.js\\",\\"sourcesContent\\":[\\"function meaningOfLife() {\\\\n  var thisIsALongLocal = 42;\\\\n  throw new Error(thisIsALongLocal);\\\\n}\\\\n\\\\nfunction boom() {\\\\n  throw new Error('boom');\\\\n}\\\\n\\",\\"function somethingElse() {\\\\n  throw new Error(\\\\\\"somethign else\\\\\\");\\\\n}\\\\n\\",\\"\\\\n// Hello world\\\\n\\\\nfunction fourth(){\\\\n  throw new Error('fourth');\\\\n}\\\\n\\",\\"function third(){\\\\n  throw new Error(\\\\\\"oh no\\\\\\");\\\\n}\\\\n\\"]}",
@@ -198,6 +259,11 @@ Object {
     "with-upstream-sourcemap.js": "function meaningOfLife(){throw new Error(42)}function boom(){throw new Error(\\"boom\\")}function somethingElse(){throw new Error(\\"somethign else\\")}function fourth(){throw new Error(\\"fourth\\")}function third(){throw new Error(\\"oh no\\")}
 //# sourceMappingURL=https://example.com/with-upstream-sourcemap.map",
     "with-upstream-sourcemap.map": "{\\"version\\":3,\\"sources\\":[\\"/inner/first.js\\",\\"/inner/second.js\\",\\"/other/fourth.js\\",\\"/other/third.js\\"],\\"names\\":[\\"meaningOfLife\\",\\"Error\\",\\"boom\\",\\"somethingElse\\",\\"fourth\\",\\"third\\"],\\"mappings\\":\\"AAAA,SAAAA,gBAEA,MAAA,IAAAC,MADA,IAIA,SAAAC,OACA,MAAA,IAAAD,MAAA,QCNA,SAAAE,gBACA,MAAA,IAAAF,MAAA,kBCEA,SAAAG,SACA,MAAA,IAAAH,MAAA,UCJA,SAAAI,QACA,MAAA,IAAAJ,MAAA\\",\\"file\\":\\"with-upstream-sourcemap.js\\",\\"sourcesContent\\":[\\"function meaningOfLife() {\\\\n  var thisIsALongLocal = 42;\\\\n  throw new Error(thisIsALongLocal);\\\\n}\\\\n\\\\nfunction boom() {\\\\n  throw new Error('boom');\\\\n}\\\\n\\",\\"function somethingElse() {\\\\n  throw new Error(\\\\\\"somethign else\\\\\\");\\\\n}\\\\n\\",\\"\\\\n// Hello world\\\\n\\\\nfunction fourth(){\\\\n  throw new Error('fourth');\\\\n}\\\\n\\",\\"function third(){\\\\n  throw new Error(\\\\\\"oh no\\\\\\");\\\\n}\\\\n\\"]}",
+  },
+  "mjs": Object {
+    "index.mjs": "const MJS_I_GUESS=\\"ok\\";export default\\"ok\\";
+//# sourceMappingURL=https://example.com/index.mjs.map",
+    "index.mjs.map": "{\\"version\\":3,\\"sources\\":[\\"mjs/index.mjs\\"],\\"names\\":[\\"MJS_I_GUESS\\"],\\"mappings\\":\\"AAAA,MAAMA,YAAc,mBAAA\\",\\"file\\":\\"index.mjs\\"}",
   },
   "multi": Object {
     "with-multi-sourcemap.js": "function meaningOfLife(){throw new Error(42)}function boom(){throw new Error(\\"boom\\")}function somethingElse(){throw new Error(\\"somethign else\\")}function fourth(){throw new Error(\\"fourth\\")}function third(){throw new Error(\\"oh no\\")}
