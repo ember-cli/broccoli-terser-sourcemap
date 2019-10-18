@@ -1,5 +1,16 @@
 # Changelog
 
+
+## v3.2.0 (2019-10-18)
+
+#### :rocket: Enhancement
+* [#176](https://github.com/ember-cli/broccoli-uglify-sourcemap/pull/176) Build(deps): Bump terser from 3.17.0 to 4.3.9 ([@dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+* [#166](https://github.com/ember-cli/broccoli-uglify-sourcemap/pull/166) Support .mjs extension ([@chadhietala](https://github.com/chadhietala))
+
+#### Committers: 2
+- Chad Hietala ([@chadhietala](https://github.com/chadhietala))
+- [@dependabot-preview[bot]](https://github.com/apps/dependabot-preview)
+
 ## v3.1.1 (2019-04-16)
 
 * Fix sources: ["0"], output the correct source (@xg-wang)
