@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/ember-cli/broccoli-uglify-sourcemap.svg?branch=master)](https://travis-ci.org/ember-cli/broccoli-uglify-sourcemap)
 
-A broccoli filter that applies uglify-js while properly generating or
-maintaining sourcemaps.
+A broccoli filter that applies [terser](https://github.com/terser/terser) to
+uglify code while properly generating or maintaining sourcemaps.
 
 ### installation
 
