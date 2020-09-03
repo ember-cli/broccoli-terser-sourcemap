@@ -168,7 +168,7 @@ let { bar } = Foo.prototype;`,
       }
 
       expect(shouldError.name).toEqual('Error');
-      expect(shouldError.message).toEqual('async option is deprecated');
+      expect(shouldError.message).toEqual('\n Passing `async` property inside `options` is deprecated.');
     });
   });
 
