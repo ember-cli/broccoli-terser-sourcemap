@@ -87,7 +87,6 @@ UglifyWriter.prototype.build = async function() {
           return writer.processFile(inFile, outFile, relativePath, writer.outputPath);
         };
         pendingWork.push(uglifyOperation);
-        return;
       } else if (relativePath.slice(-4) === '.map') {
         if (writer.excludes.match(`${relativePath.slice(0, -4)}.{js,mjs}`)) {
           // ensure .map files for excluded JS paths are also copied forward
