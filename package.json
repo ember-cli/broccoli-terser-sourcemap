@@ -37,8 +37,6 @@
     "workerpool": "^6.0.0"
   },
   "devDependencies": {
-    "babel-jest": "^23.6.0",
-    "babel-plugin-transform-async-to-generator": "^6.24.1",
     "broccoli-test-helper": "^2.0.0",
     "eslint-plugin-node": "^6.0.1",
     "jest": "^26.4.2",
