@@ -6,22 +6,34 @@
   "bugs": {
     "url": "https://github.com/ember-cli/broccoli-uglify-sourcemap/issues"
   },
-  "license": "MIT",
-  "author": "Edward Faulkner <ef@alum.mit.edu>",
-  "files": [
-    "index.js",
-    "lib"
-  ],
-  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ember-cli/broccoli-uglify-sourcemap.git"
   },
+  "license": "MIT",
+  "author": "Edward Faulkner <ef@alum.mit.edu>",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "lib"
+  ],
   "scripts": {
-    "changelog": "lerna-changelog",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watchAll"
+  },
+  "jest": {
+    "modulePathIgnorePatterns": [
+      "<rootDir>/tmp"
+    ],
+    "projects": [
+      "<rootDir>/jest-eslint.config.js",
+      "<rootDir>/jest-test.config.js"
+    ],
+    "transformIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/index.js"
+    ]
   },
   "dependencies": {
     "async-promise-queue": "^1.0.5",
@@ -41,10 +53,14 @@
     "eslint-plugin-node": "^6.0.1",
     "jest": "^26.4.2",
     "jest-runner-eslint": "^0.6.0",
-    "lerna-changelog": "^0.8.3"
+    "release-it": "^13.6.5",
+    "release-it-lerna-changelog": "^2.3.0"
   },
   "engines": {
     "node": "10.* || 12.* || >= 14"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
   },
   "changelog": {
     "repo": "ember-cli/broccoli-uglify-sourcemap",
@@ -56,17 +72,19 @@
       "internal": ":house: Internal"
     }
   },
-  "jest": {
-    "modulePathIgnorePatterns": [
-      "<rootDir>/tmp"
-    ],
-    "projects": [
-      "<rootDir>/jest-eslint.config.js",
-      "<rootDir>/jest-test.config.js"
-    ],
-    "transformIgnorePatterns": [
-      "<rootDir>/node_modules/",
-      "<rootDir>/index.js"
-    ]
+  "release-it": {
+    "plugins": {
+      "release-it-lerna-changelog": {
+        "infile": "CHANGELOG.md",
+        "launchEditor": true
+      }
+    },
+    "git": {
+      "tagName": "v${version}"
+    },
+    "github": {
+      "release": true,
+      "tokenRef": "GITHUB_AUTH"
+    }
   }
 }
