@@ -1,11 +1,11 @@
 'use strict';
 
+const fs = require('fs');
 const walkSync = require('walk-sync');
 const Plugin = require('broccoli-plugin');
 const path = require('path');
 const defaults = require('lodash.defaultsdeep');
 const symlinkOrCopy = require('symlink-or-copy');
-const mkdirp = require('mkdirp');
 const MatcherCollection = require('matcher-collection');
 const debug = require('debug')('broccoli-uglify-sourcemap');
 const queue = require('async-promise-queue');
@@ -71,7 +71,7 @@ module.exports = class UglifyWriter extends Plugin {
         let inFile = path.join(inputPath, relativePath);
         let outFile = path.join(this.outputPath, relativePath);
 
-        mkdirp.sync(path.dirname(outFile));
+        fs.mkdirSync(path.dirname(outFile), { recursive: true });
 
         if (this._isJSExt(relativePath) && !this.excludes.match(relativePath)) {
           // wrap this in a function so it doesn't actually run yet, and can be throttled
