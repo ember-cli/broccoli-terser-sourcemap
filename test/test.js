@@ -27,14 +27,6 @@ describe('broccoli-uglify-sourcemap', function() {
     expect(builder.read()).toMatchSnapshot();
   });
 
-  it('generates expected output async', async function() {
-    builder = createBuilder(new Uglify(fixtures, { async: true }));
-
-    await builder.build();
-
-    expect(builder.read()).toMatchSnapshot();
-  });
-
   it('can handle ES6 code', async function() {
     input.write({
       'es6.js': `class Foo {
@@ -97,7 +89,7 @@ let { bar } = Foo.prototype;`,
   });
 
   it('shuts down the workerpool', async function() {
-    let testUglify = new Uglify(fixtures, { async: true });
+    let testUglify = new Uglify(fixtures);
     builder = createBuilder(testUglify);
 
     await builder.build();
@@ -108,20 +100,7 @@ let { bar } = Foo.prototype;`,
 
   describe('on error', function() {
     it('rejects with BuildError', async function() {
-      builder = createBuilder(new Uglify(fixturesError, {}));
-
-      let shouldError;
-      await builder.build()
-        .catch(err => {
-          shouldError = err;
-        });
-      expect(shouldError.name).toEqual('BuildError');
-
-      expect(builder.read()).toMatchSnapshot();
-    });
-
-    it('rejects with BuildError async', async function() {
-      builder = createBuilder(new Uglify(fixturesError, { async: true }));
+      builder = createBuilder(new Uglify(fixturesError));
 
       let shouldError;
       await builder.build()
@@ -134,7 +113,7 @@ let { bar } = Foo.prototype;`,
     });
 
     it('shuts down the workerpool', async function() {
-      let testUglify = new Uglify(fixturesError, { async: true });
+      let testUglify = new Uglify(fixturesError);
       builder = createBuilder(testUglify);
 
       await builder.build().catch(() => {});
@@ -150,20 +129,20 @@ let { bar } = Foo.prototype;`,
     });
 
     it('defaults to CPUs-1 workers', async function() {
-      let testUglify = new Uglify(fixturesError, { async: true });
+      let testUglify = new Uglify(fixturesError);
 
       expect(testUglify.concurrency).toEqual(require('os').cpus().length - 1);
     });
 
     it('sets concurrency using the option', async function() {
-      let testUglify = new Uglify(fixturesError, { async: true, concurrency: 145 });
+      let testUglify = new Uglify(fixturesError, { concurrency: 145 });
 
       expect(testUglify.concurrency).toEqual(145);
     });
 
     it('overrides concurrency with JOBS env variable', async function() {
       process.env.JOBS = '7';
-      let testUglify = new Uglify(fixturesError, { async: true, concurrency: 145 });
+      let testUglify = new Uglify(fixturesError, { concurrency: 145 });
 
       expect(testUglify.concurrency).toEqual(7);
     });
@@ -176,6 +155,20 @@ let { bar } = Foo.prototype;`,
       await builder.build();
 
       expect(builder.read()).toMatchSnapshot();
+    });
+  });
+
+  describe('deprecation', function() {
+    it('deprecated async option', async function() {
+      let shouldError;
+      try {
+        builder = createBuilder(new Uglify(fixtures, { async: true }));
+      } catch (err) {
+        shouldError = err;
+      }
+
+      expect(shouldError.name).toEqual('Error');
+      expect(shouldError.message).toEqual('\n Passing `async` property inside `options` is deprecated.');
     });
   });
 

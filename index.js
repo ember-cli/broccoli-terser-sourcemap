@@ -43,8 +43,11 @@ function UglifyWriter(inputNodes, options) {
     },
   });
 
-  // consumers of this plugin can opt-in to async and concurrent behavior
-  this.async = (this.options.async === true);
+  // async prop is deprecated since terser.minify() is async by default
+  if ('async' in this.options) {
+    throw new Error('\n Passing `async` property inside `options` is deprecated.');
+  }
+
   this.concurrency = Number(process.env.JOBS) || this.options.concurrency || Math.max(require('os').cpus().length - 1, 1);
 
   // create a worker pool using an external worker script
@@ -63,10 +66,9 @@ function UglifyWriter(inputNodes, options) {
   }
 }
 
-UglifyWriter.prototype.build = function() {
+UglifyWriter.prototype.build = async function() {
   let writer = this;
 
-  // when options.async === true, allow processFile() operations to complete asynchronously
   let pendingWork = [];
 
   this.inputPaths.forEach(inputPath => {
@@ -84,11 +86,7 @@ UglifyWriter.prototype.build = function() {
         let uglifyOperation = function() {
           return writer.processFile(inFile, outFile, relativePath, writer.outputPath);
         };
-        if (writer.async) {
-          pendingWork.push(uglifyOperation);
-          return;
-        }
-        return uglifyOperation();
+        pendingWork.push(uglifyOperation);
       } else if (relativePath.slice(-4) === '.map') {
         if (writer.excludes.match(`${relativePath.slice(0, -4)}.{js,mjs}`)) {
           // ensure .map files for excluded JS paths are also copied forward
@@ -101,17 +99,13 @@ UglifyWriter.prototype.build = function() {
     });
   });
 
-  return queue(worker, pendingWork, writer.concurrency)
-    .then((/* results */) => {
-      // files are finished processing, shut down the workers
-      writer.pool.terminate();
-      return writer.outputPath;
-    })
-    .catch(e => {
-      // make sure to shut down the workers on error
-      writer.pool.terminate();
-      throw e;
-    });
+  try {
+    await queue(worker, pendingWork, writer.concurrency);
+    return writer.outputPath;
+  } finally {
+    // make sure to shut down the workers on both success and error case
+    writer.pool.terminate();
+  }
 };
 
 UglifyWriter.prototype._isJSExt = function(relativePath) {
@@ -120,7 +114,7 @@ UglifyWriter.prototype._isJSExt = function(relativePath) {
 
 UglifyWriter.prototype.processFile = function(inFile, outFile, relativePath, outDir) {
   // don't run this in the workerpool if concurrency is disabled (can set JOBS <= 1)
-  if (this.async && this.concurrency > 1) {
+  if (this.concurrency > 1) {
     debug('running in workerpool, concurrency=%d', this.concurrency);
     // each of these arguments is a string, which can be sent to the worker process as-is
     return this.pool.exec('processFileParallel', [inFile, outFile, relativePath, outDir, silent, this.options]);
