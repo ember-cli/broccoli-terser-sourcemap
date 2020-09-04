@@ -4,13 +4,10 @@
 
 const Uglify = require('..');
 const path = require('path');
-const helpers = require('broccoli-test-helper');
+const { createTempDir, createBuilder } = require('broccoli-test-helper');
 
 const fixtures = path.join(__dirname, 'fixtures');
 const fixturesError = path.join(__dirname, 'fixtures-error');
-
-const createTempDir = helpers.createTempDir;
-const createBuilder = helpers.createBuilder;
 
 describe('broccoli-uglify-sourcemap', function() {
   let input, builder;

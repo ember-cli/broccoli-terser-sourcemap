@@ -12,13 +12,13 @@ npm install --save broccoli-uglify-sourcemap
 ### usage
 
 ```js
-var uglify = require('broccoli-uglify-sourcemap');
+const Uglify = require('broccoli-uglify-sourcemap');
 
 // basic usage
-var uglified = uglify(input);
+let uglified = new Uglify(input);
 
 // advanced usage
-var uglified = uglify(input, {
+let uglified = new Uglify(input, {
   exclude: [..], // array of globs, to not minify
 
   uglify: {
@@ -31,7 +31,6 @@ var uglified = uglify(input, {
   publicUrl: 'https://myamazingapp.com/', // value to be prepended to sourceMappingURL, defaults to ''
   hiddenSourceMap: false, // skips adding the reference to sourcemap in the minified JS, defaults to false
 
-  async: true,   // run uglify in parallel, defaults to false
   concurrency: 3 // number of parallel workers, defaults to number of CPUs - 1
 });
 ```
