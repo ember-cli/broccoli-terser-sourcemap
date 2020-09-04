@@ -1,3 +1,25 @@
+## v4.0.0 (2020-09-04)
+
+#### :boom: Breaking Change
+* [#243](https://github.com/ember-cli/broccoli-uglify-sourcemap/pull/243) Refactor to native class. ([@rwjblue](https://github.com/rwjblue))
+* [#237](https://github.com/ember-cli/broccoli-uglify-sourcemap/pull/237) Update to Terser v5 ([@theenadayalank](https://github.com/theenadayalank))
+* [#241](https://github.com/ember-cli/broccoli-uglify-sourcemap/pull/241) Lowest supported node version is 10 ([@theenadayalank](https://github.com/theenadayalank))
+
+#### :rocket: Enhancement
+* [#248](https://github.com/ember-cli/broccoli-uglify-sourcemap/pull/248) Remove mkdirp usage in favor of `fs.mkdirSync(path, { recursive: true });` ([@rwjblue](https://github.com/rwjblue))
+* [#238](https://github.com/ember-cli/broccoli-uglify-sourcemap/pull/238) Fix deprecation warning for `options.nodeWorker` by updating `workerpool` to 6.0.0 ([@theenadayalank](https://github.com/theenadayalank))
+
+#### :house: Internal
+* [#247](https://github.com/ember-cli/broccoli-uglify-sourcemap/pull/247) Add release automation and documentation. ([@rwjblue](https://github.com/rwjblue))
+* [#246](https://github.com/ember-cli/broccoli-uglify-sourcemap/pull/246) Remove Travis CI setup. ([@rwjblue](https://github.com/rwjblue))
+* [#244](https://github.com/ember-cli/broccoli-uglify-sourcemap/pull/244) Remove Babel transpilation during tests. ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 3
+- Cyrille David ([@dcyriller](https://github.com/dcyriller))
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+- Theenadayalan ([@theenadayalank](https://github.com/theenadayalank))
+
+
 ## v3.2.0 (2019-10-18)
 
 #### :rocket: Enhancement
