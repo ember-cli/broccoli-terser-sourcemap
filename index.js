@@ -101,13 +101,10 @@ UglifyWriter.prototype.build = async function() {
 
   try {
     await queue(worker, pendingWork, writer.concurrency);
-    // files are finished processing, shut down the workers
-    writer.pool.terminate();
     return writer.outputPath;
-  } catch (e) {
-    // make sure to shut down the workers on error
+  } finally {
+    // make sure to shut down the workers on both success and error case
     writer.pool.terminate();
-    throw e;
   }
 };
 
