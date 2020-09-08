@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`broccoli-uglify-sourcemap can disable sourcemaps 1`] = `
+exports[`broccoli-terser-sourcemap can disable sourcemaps 1`] = `
 Object {
   "inside": Object {
     "with-upstream-sourcemap.js": "function meaningOfLife(){throw new Error(42)}function boom(){throw new Error(\\"boom\\")}function somethingElse(){throw new Error(\\"somethign else\\")}function fourth(){throw new Error(\\"fourth\\")}function third(){throw new Error(\\"oh no\\")}",
@@ -19,7 +19,7 @@ Object {
 }
 `;
 
-exports[`broccoli-uglify-sourcemap can exclude files from getting uglified 1`] = `
+exports[`broccoli-terser-sourcemap can exclude files from getting uglified 1`] = `
 Object {
   "inside": Object {
     "with-upstream-sourcemap.js": "/* This is my header. */
@@ -68,7 +68,7 @@ function third(){
 }
 `;
 
-exports[`broccoli-uglify-sourcemap can handle ES6 code 1`] = `
+exports[`broccoli-terser-sourcemap can handle ES6 code 1`] = `
 Object {
   "es6.js": "class Foo{bar(){console.log(this.baz)}}let{bar:bar}=Foo.prototype;
 //# sourceMappingURL=es6.map",
@@ -76,7 +76,7 @@ Object {
 }
 `;
 
-exports[`broccoli-uglify-sourcemap generates expected output 1`] = `
+exports[`broccoli-terser-sourcemap generates expected output 1`] = `
 Object {
   "inside": Object {
     "with-upstream-sourcemap.js": "function meaningOfLife(){throw new Error(42)}function boom(){throw new Error(\\"boom\\")}function somethingElse(){throw new Error(\\"somethign else\\")}function fourth(){throw new Error(\\"fourth\\")}function third(){throw new Error(\\"oh no\\")}
@@ -105,7 +105,7 @@ Object {
 }
 `;
 
-exports[`broccoli-uglify-sourcemap mjs can uglify .mjs files 1`] = `
+exports[`broccoli-terser-sourcemap mjs can minify .mjs files 1`] = `
 Object {
   "inside": Object {
     "with-upstream-sourcemap.js": "function meaningOfLife(){throw new Error(42)}function boom(){throw new Error(\\"boom\\")}function somethingElse(){throw new Error(\\"somethign else\\")}function fourth(){throw new Error(\\"fourth\\")}function third(){throw new Error(\\"oh no\\")}
@@ -134,11 +134,11 @@ Object {
 }
 `;
 
-exports[`broccoli-uglify-sourcemap on error rejects with BuildError 1`] = `Object {}`;
+exports[`broccoli-terser-sourcemap on error rejects with BuildError 1`] = `Object {}`;
 
-exports[`broccoli-uglify-sourcemap on error shuts down the workerpool 1`] = `Object {}`;
+exports[`broccoli-terser-sourcemap on error shuts down the workerpool 1`] = `Object {}`;
 
-exports[`broccoli-uglify-sourcemap shuts down the workerpool 1`] = `
+exports[`broccoli-terser-sourcemap shuts down the workerpool 1`] = `
 Object {
   "inside": Object {
     "with-upstream-sourcemap.js": "function meaningOfLife(){throw new Error(42)}function boom(){throw new Error(\\"boom\\")}function somethingElse(){throw new Error(\\"somethign else\\")}function fourth(){throw new Error(\\"fourth\\")}function third(){throw new Error(\\"oh no\\")}
@@ -167,7 +167,7 @@ Object {
 }
 `;
 
-exports[`broccoli-uglify-sourcemap supports alternate sourcemap location 1`] = `
+exports[`broccoli-terser-sourcemap supports alternate sourcemap location 1`] = `
 Object {
   "inside": Object {
     "with-upstream-sourcemap.js": "function meaningOfLife(){throw new Error(42)}function boom(){throw new Error(\\"boom\\")}function somethingElse(){throw new Error(\\"somethign else\\")}function fourth(){throw new Error(\\"fourth\\")}function third(){throw new Error(\\"oh no\\")}
@@ -198,7 +198,7 @@ Object {
 }
 `;
 
-exports[`broccoli-uglify-sourcemap supports hidden sourcemaps 1`] = `
+exports[`broccoli-terser-sourcemap supports hidden sourcemaps 1`] = `
 Object {
   "inside": Object {
     "with-upstream-sourcemap.js": "function meaningOfLife(){throw new Error(42)}function boom(){throw new Error(\\"boom\\")}function somethingElse(){throw new Error(\\"somethign else\\")}function fourth(){throw new Error(\\"fourth\\")}function third(){throw new Error(\\"oh no\\")}",
@@ -222,7 +222,7 @@ Object {
 }
 `;
 
-exports[`broccoli-uglify-sourcemap supports public URL for sourcemaps 1`] = `
+exports[`broccoli-terser-sourcemap supports public URL for sourcemaps 1`] = `
 Object {
   "inside": Object {
     "with-upstream-sourcemap.js": "function meaningOfLife(){throw new Error(42)}function boom(){throw new Error(\\"boom\\")}function somethingElse(){throw new Error(\\"somethign else\\")}function fourth(){throw new Error(\\"fourth\\")}function third(){throw new Error(\\"oh no\\")}

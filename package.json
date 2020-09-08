@@ -1,14 +1,14 @@
 {
-  "name": "broccoli-uglify-sourcemap",
+  "name": "broccoli-terser-sourcemap",
   "version": "4.0.0",
-  "description": "Broccoli filter to uglify files while preserving their sourcemaps.",
-  "homepage": "https://github.com/ember-cli/broccoli-uglify-sourcemap#readme",
+  "description": "Broccoli filter to minify files with terser while preserving their sourcemaps.",
+  "homepage": "https://github.com/ember-cli/broccoli-terser-sourcemap#readme",
   "bugs": {
-    "url": "https://github.com/ember-cli/broccoli-uglify-sourcemap/issues"
+    "url": "https://github.com/ember-cli/broccoli-terser-sourcemap/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ember-cli/broccoli-uglify-sourcemap.git"
+    "url": "git+https://github.com/ember-cli/broccoli-terser-sourcemap.git"
   },
   "license": "MIT",
   "author": "Edward Faulkner <ef@alum.mit.edu>",
@@ -62,7 +62,7 @@
     "registry": "https://registry.npmjs.org"
   },
   "changelog": {
-    "repo": "ember-cli/broccoli-uglify-sourcemap",
+    "repo": "ember-cli/broccoli-terser-sourcemap",
     "labels": {
       "breaking": ":boom: Breaking Change",
       "enhancement": ":rocket: Enhancement",

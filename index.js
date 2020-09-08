@@ -7,7 +7,7 @@ const path = require('path');
 const defaults = require('lodash.defaultsdeep');
 const symlinkOrCopy = require('symlink-or-copy');
 const MatcherCollection = require('matcher-collection');
-const debug = require('debug')('broccoli-uglify-sourcemap');
+const debug = require('debug')('broccoli-terser-sourcemap');
 const queue = require('async-promise-queue');
 const workerpool = require('workerpool');
 
@@ -23,7 +23,7 @@ const MatchNothing = {
   },
 };
 
-module.exports = class UglifyWriter extends Plugin {
+module.exports = class TerserWriter extends Plugin {
   constructor(_inputNodes, options = {}) {
     let inputNodes = Array.isArray(_inputNodes) ? _inputNodes : [_inputNodes];
 
@@ -34,7 +34,7 @@ module.exports = class UglifyWriter extends Plugin {
     });
 
     this.options = defaults(options, {
-      uglify: {
+      terser: {
         sourceMap: {},
       },
     });
@@ -75,8 +75,8 @@ module.exports = class UglifyWriter extends Plugin {
 
         if (this._isJSExt(relativePath) && !this.excludes.match(relativePath)) {
           // wrap this in a function so it doesn't actually run yet, and can be throttled
-          let uglifyOperation = () => this.processFile(inFile, outFile, relativePath, this.outputPath);
-          pendingWork.push(uglifyOperation);
+          let terserOperation = () => this.processFile(inFile, outFile, relativePath, this.outputPath);
+          pendingWork.push(terserOperation);
         } else if (relativePath.slice(-4) === '.map') {
           if (this.excludes.match(`${relativePath.slice(0, -4)}.{js,mjs}`)) {
             // ensure .map files for excluded JS paths are also copied forward
