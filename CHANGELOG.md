@@ -1,3 +1,12 @@
+## v4.1.0 (2020-09-08)
+
+#### :rocket: Enhancement
+* [#250](https://github.com/ember-cli/broccoli-terser-sourcemap/pull/250) Rename to broccoli-terser-sourcemap. ([@rwjblue](https://github.com/rwjblue))
+
+#### Committers: 1
+- Robert Jackson ([@rwjblue](https://github.com/rwjblue))
+
+
 ## v4.0.0 (2020-09-04)
 
 #### :boom: Breaking Change
