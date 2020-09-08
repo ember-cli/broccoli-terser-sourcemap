@@ -1,27 +1,27 @@
-[![Build Status](https://travis-ci.org/ember-cli/broccoli-uglify-sourcemap.svg?branch=master)](https://travis-ci.org/ember-cli/broccoli-uglify-sourcemap)
+[![Build Status](https://travis-ci.org/ember-cli/broccoli-terser-sourcemap.svg?branch=master)](https://travis-ci.org/ember-cli/broccoli-terser-sourcemap)
 
 A broccoli filter that applies [terser](https://github.com/terser/terser) to
-uglify code while properly generating or maintaining sourcemaps.
+minify code while properly generating or maintaining sourcemaps.
 
 ### installation
 
 ```sh
-npm install --save broccoli-uglify-sourcemap
+npm install --save broccoli-terser-sourcemap
 ```
 
 ### usage
 
 ```js
-const Uglify = require('broccoli-uglify-sourcemap');
+const Terser = require('broccoli-terser-sourcemap');
 
 // basic usage
-let uglified = new Uglify(input);
+let minified = new Terser(input);
 
 // advanced usage
-let uglified = new Uglify(input, {
+let minified = new Terser(input, {
   exclude: [..], // array of globs, to not minify
 
-  uglify: {
+  terser: {
     mangle: false,    // defaults to true
     compress: false,  // defaults to true
     sourceMap: false, // defaults to true

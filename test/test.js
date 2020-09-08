@@ -2,14 +2,14 @@
 
 /* global describe, afterEach, it, expect */
 
-const Uglify = require('..');
+const Terser = require('..');
 const path = require('path');
 const { createTempDir, createBuilder } = require('broccoli-test-helper');
 
 const fixtures = path.join(__dirname, 'fixtures');
 const fixturesError = path.join(__dirname, 'fixtures-error');
 
-describe('broccoli-uglify-sourcemap', function() {
+describe('broccoli-terser-sourcemap', function() {
   let input, builder;
 
   beforeEach(async function() {
@@ -17,7 +17,7 @@ describe('broccoli-uglify-sourcemap', function() {
   });
 
   it('generates expected output', async function() {
-    builder = createBuilder(new Uglify(fixtures));
+    builder = createBuilder(new Terser(fixtures));
 
     await builder.build();
 
@@ -35,7 +35,7 @@ describe('broccoli-uglify-sourcemap', function() {
 let { bar } = Foo.prototype;`,
     });
 
-    builder = createBuilder(new Uglify(input.path()));
+    builder = createBuilder(new Terser(input.path()));
 
     await builder.build();
 
@@ -43,7 +43,7 @@ let { bar } = Foo.prototype;`,
   });
 
   it('can disable sourcemaps', async function() {
-    builder = createBuilder(new Uglify(fixtures, { uglify: { sourceMap: false } }));
+    builder = createBuilder(new Terser(fixtures, { terser: { sourceMap: false } }));
 
     await builder.build();
 
@@ -51,7 +51,7 @@ let { bar } = Foo.prototype;`,
   });
 
   it('supports hidden sourcemaps', async function() {
-    builder = createBuilder(new Uglify(fixtures, { hiddenSourceMap: true }));
+    builder = createBuilder(new Terser(fixtures, { hiddenSourceMap: true }));
 
     await builder.build();
 
@@ -59,7 +59,7 @@ let { bar } = Foo.prototype;`,
   });
 
   it('supports public URL for sourcemaps', async function() {
-    builder = createBuilder(new Uglify(fixtures, { publicUrl: 'https://example.com' }));
+    builder = createBuilder(new Terser(fixtures, { publicUrl: 'https://example.com' }));
 
     await builder.build();
 
@@ -67,7 +67,7 @@ let { bar } = Foo.prototype;`,
   });
 
   it('can exclude files from getting uglified', async function() {
-    builder = createBuilder(new Uglify(fixtures, {
+    builder = createBuilder(new Terser(fixtures, {
       exclude: ['inside/with-up*'],
     }));
 
@@ -78,7 +78,7 @@ let { bar } = Foo.prototype;`,
 
 
   it('supports alternate sourcemap location', async function() {
-    builder = createBuilder(new Uglify(fixtures, { sourceMapDir: 'maps' }));
+    builder = createBuilder(new Terser(fixtures, { sourceMapDir: 'maps' }));
 
     await builder.build();
 
@@ -86,18 +86,18 @@ let { bar } = Foo.prototype;`,
   });
 
   it('shuts down the workerpool', async function() {
-    let testUglify = new Uglify(fixtures);
-    builder = createBuilder(testUglify);
+    let testTerser = new Terser(fixtures);
+    builder = createBuilder(testTerser);
 
     await builder.build();
 
     expect(builder.read()).toMatchSnapshot();
-    expect(testUglify.pool.stats().totalWorkers).toEqual(0);
+    expect(testTerser.pool.stats().totalWorkers).toEqual(0);
   });
 
   describe('on error', function() {
     it('rejects with BuildError', async function() {
-      builder = createBuilder(new Uglify(fixturesError));
+      builder = createBuilder(new Terser(fixturesError));
 
       let shouldError;
       await builder.build()
@@ -110,13 +110,13 @@ let { bar } = Foo.prototype;`,
     });
 
     it('shuts down the workerpool', async function() {
-      let testUglify = new Uglify(fixturesError);
-      builder = createBuilder(testUglify);
+      let testTerser = new Terser(fixturesError);
+      builder = createBuilder(testTerser);
 
       await builder.build().catch(() => {});
 
       expect(builder.read()).toMatchSnapshot();
-      expect(testUglify.pool.stats().totalWorkers).toEqual(0);
+      expect(testTerser.pool.stats().totalWorkers).toEqual(0);
     });
   });
 
@@ -126,28 +126,28 @@ let { bar } = Foo.prototype;`,
     });
 
     it('defaults to CPUs-1 workers', async function() {
-      let testUglify = new Uglify(fixturesError);
+      let testTerser = new Terser(fixturesError);
 
-      expect(testUglify.concurrency).toEqual(require('os').cpus().length - 1);
+      expect(testTerser.concurrency).toEqual(require('os').cpus().length - 1);
     });
 
     it('sets concurrency using the option', async function() {
-      let testUglify = new Uglify(fixturesError, { concurrency: 145 });
+      let testTerser = new Terser(fixturesError, { concurrency: 145 });
 
-      expect(testUglify.concurrency).toEqual(145);
+      expect(testTerser.concurrency).toEqual(145);
     });
 
     it('overrides concurrency with JOBS env variable', async function() {
       process.env.JOBS = '7';
-      let testUglify = new Uglify(fixturesError, { concurrency: 145 });
+      let testTerser = new Terser(fixturesError, { concurrency: 145 });
 
-      expect(testUglify.concurrency).toEqual(7);
+      expect(testTerser.concurrency).toEqual(7);
     });
   });
 
   describe('mjs', function() {
-    it('can uglify .mjs files', async function() {
-      builder = createBuilder(new Uglify(fixtures));
+    it('can minify .mjs files', async function() {
+      builder = createBuilder(new Terser(fixtures));
 
       await builder.build();
 
@@ -159,7 +159,7 @@ let { bar } = Foo.prototype;`,
     it('deprecated async option', async function() {
       let shouldError;
       try {
-        builder = createBuilder(new Uglify(fixtures, { async: true }));
+        builder = createBuilder(new Terser(fixtures, { async: true }));
       } catch (err) {
         shouldError = err;
       }
