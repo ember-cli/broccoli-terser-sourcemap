@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "async-promise-queue": "^1.0.5",
-    "broccoli-plugin": "^4.0.3",
+    "broccoli-plugin": "^4.0.5",
     "debug": "^4.3.1",
     "lodash.defaultsdeep": "^4.6.1",
     "matcher-collection": "^2.0.1",
