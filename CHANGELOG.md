@@ -1,3 +1,20 @@
+Version 9 of Highlight.js has reached EOL and is no longer supported.
+Please upgrade or ask whatever dependency you are using to upgrade.
+https://github.com/highlightjs/highlight.js/issues/2877
+
+## v4.1.1 (2023-10-31)
+
+#### :bug: Bug Fix
+* [#313](https://github.com/ember-cli/broccoli-terser-sourcemap/pull/313) fix: Fix sourcemap file lookup ([@mydea](https://github.com/mydea))
+
+#### :house: Internal
+* [#315](https://github.com/ember-cli/broccoli-terser-sourcemap/pull/315) Setup release automation ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 3
+- Francesco Novy ([@mydea](https://github.com/mydea))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+- [@dependabot-preview[bot]](https://github.com/apps/dependabot-preview)
+
 ## v4.1.0 (2020-09-08)
 
 #### :rocket: Enhancement
